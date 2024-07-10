@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_ado/bloc/home_bloc.dart';
 import 'package:color_ado/data/vos/banner_vo/banner_vo.dart';
@@ -154,6 +156,17 @@ class _BannerView extends StatefulWidget {
 class _BannerViewState extends State<_BannerView> {
   final _pageController = PageController();
   int _pageIndex = 0;
+
+  @override
+  void initState() {
+    Timer.periodic(
+        const Duration(
+          seconds: 2,
+        ), (_) {
+      _pageController.jumpToPage(_pageIndex == widget.bannerList.length - 1 ? 0 : ++_pageIndex);
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {
