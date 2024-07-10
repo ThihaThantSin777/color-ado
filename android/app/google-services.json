@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "39907433298",
+    "project_id": "color-ado-334c0",
+    "storage_bucket": "color-ado-334c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39907433298:android:0672ab5051574ebe79b88b",
+        "android_client_info": {
+          "package_name": "com.example.color_ado"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgWvCe-Q7osyC-SjqExHumJnF4JIUU_IQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
