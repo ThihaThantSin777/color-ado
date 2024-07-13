@@ -3,7 +3,7 @@ import 'package:color_ado/bloc/users/view_all_bloc.dart';
 import 'package:color_ado/data/vos/centers_vo/centers_vo.dart';
 import 'package:color_ado/data/vos/facilities_vo/facilities_vo.dart';
 import 'package:color_ado/data/vos/local_and_international_relations_vo/local_and_international_relations_vo.dart';
-import 'package:color_ado/pages/users/details_page.dart';
+import 'package:color_ado/pages/users/home/home_details_page.dart';
 import 'package:color_ado/resources/dimens.dart';
 import 'package:color_ado/resources/strings.dart';
 import 'package:color_ado/widgets/data_empty_widget.dart';
@@ -67,7 +67,7 @@ class _FacilitiesViewAllVerticalListView extends StatelessWidget {
             itemBuilder: (_, index) => GestureDetector(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => DetailsPage(
+                    builder: (_) => HomeDetailsPage(
                           image: facilitiesList[index].url,
                           description: facilitiesList[index].description,
                         )));
@@ -113,7 +113,7 @@ class _CentersViewAllVerticalListView extends StatelessWidget {
             itemBuilder: (_, index) => GestureDetector(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => DetailsPage(
+                    builder: (_) => HomeDetailsPage(
                           image: centersList[index].url,
                           description: centersList[index].description,
                         )));
@@ -159,7 +159,7 @@ class _LocalAndInternationalRelationshipsView extends StatelessWidget {
             itemBuilder: (_, index) => GestureDetector(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => DetailsPage(
+                    builder: (_) => HomeDetailsPage(
                           image: localAndInternationalRelationsList[index].url,
                           description: localAndInternationalRelationsList[index].description,
                         )));

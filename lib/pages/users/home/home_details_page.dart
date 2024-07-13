@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_ado/resources/dimens.dart';
 import 'package:flutter/material.dart';
 
-class DetailsPage extends StatelessWidget {
-  const DetailsPage({
+class HomeDetailsPage extends StatelessWidget {
+  const HomeDetailsPage({
     super.key,
     required this.image,
     required this.description,
