@@ -1,14 +1,16 @@
-import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:color_ado/bloc/home_bloc.dart';
+import 'package:color_ado/bloc/users/home_bloc.dart';
 import 'package:color_ado/data/vos/banner_vo/banner_vo.dart';
 import 'package:color_ado/data/vos/centers_vo/centers_vo.dart';
 import 'package:color_ado/data/vos/facilities_vo/facilities_vo.dart';
 import 'package:color_ado/data/vos/local_and_international_relations_vo/local_and_international_relations_vo.dart';
-import 'package:color_ado/pages/users/coming_soon_page.dart';
+import 'package:color_ado/pages/users/details_page.dart';
+import 'package:color_ado/pages/users/view_all_page.dart';
+import 'package:color_ado/resources/dimens.dart';
+import 'package:color_ado/resources/strings.dart';
 import 'package:color_ado/widgets/card_image_horizontal_list_widget.dart';
 import 'package:color_ado/widgets/custom_indicator_widget.dart';
+import 'package:color_ado/widgets/data_empty_widget.dart';
 import 'package:color_ado/widgets/shimmer_loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,17 +32,15 @@ class HomePage extends StatelessWidget {
                 ///Banner View
                 SizedBox(
                   width: double.infinity,
-                  height: 300,
+                  height: kBannerViewHeight,
                   child: Selector<HomeBloc, List<BannerVO>?>(
                     selector: (_, bloc) => bloc.getBannerList,
                     builder: (_, bannerList, __) {
                       if (bannerList == null) {
-                        return const _BannerEmptyView();
+                        return const _BannerLoadingView();
                       }
                       if (bannerList.isEmpty) {
-                        return const Center(
-                          child: Text("Banner data is empty in database"),
-                        );
+                        return const DataEmptyWidget();
                       }
 
                       return _BannerView(
@@ -51,7 +51,7 @@ class HomePage extends StatelessWidget {
                 ),
 
                 const SizedBox(
-                  height: 20,
+                  height: kSP20x,
                 ),
 
                 ///Facilities View
@@ -59,27 +59,42 @@ class HomePage extends StatelessWidget {
                   selector: (_, bloc) => bloc.getFacilitiesList,
                   builder: (_, facilitiesList, __) {
                     if (facilitiesList == null) {
-                      return const _CardImageHorizontalEmptyView(
-                        height: 150,
+                      return const _CardImageHorizontalLoadingView(
+                        height: kFacilitiesViewHeight,
                       );
                     }
                     if (facilitiesList.isEmpty) {
-                      return const Center(
-                        child: Text("Facilities data is empty in database"),
-                      );
+                      return const DataEmptyWidget();
                     }
 
                     return CardImageHorizontalListWidget(
-                      title: 'Facilities',
-                      imageList: facilitiesList.map((e) => e.url).toList(),
+                      onTapImageCard: (image, description) {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => DetailsPage(image: image, description: description)));
+                      },
+                      title: kFacilitiesText,
+                      imageAndDescList: facilitiesList
+                          .map(
+                            (e) => (
+                              e.url,
+                              e.description,
+                            ),
+                          )
+                          .toList(),
                       onTapViewAll: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ComingSoonPage()));
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const ViewAllPage(
+                              title: kFacilitiesText,
+                              viewAllPath: kFacilitiesPath,
+                            ),
+                          ),
+                        );
                       },
                     );
                   },
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: kSP20x,
                 ),
 
                 ///Centers View
@@ -87,28 +102,41 @@ class HomePage extends StatelessWidget {
                   selector: (_, bloc) => bloc.getCentersList,
                   builder: (_, centersList, __) {
                     if (centersList == null) {
-                      return const _CardImageHorizontalEmptyView(
-                        height: 200,
+                      return const _CardImageHorizontalLoadingView(
+                        height: kCentersViewHeight,
                       );
                     }
                     if (centersList.isEmpty) {
-                      return const Center(
-                        child: Text("Centers data is empty in database"),
-                      );
+                      return const DataEmptyWidget();
                     }
 
                     return CardImageHorizontalListWidget(
-                      title: 'Centers',
-                      imageList: centersList.map((e) => e.url).toList(),
-                      onTapViewAll: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ComingSoonPage()));
+                      onTapImageCard: (image, description) {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => DetailsPage(image: image, description: description)));
                       },
-                      cardListViewHeight: 200,
+                      title: kCentersText,
+                      imageAndDescList: centersList
+                          .map(
+                            (e) => (
+                              e.url,
+                              e.description,
+                            ),
+                          )
+                          .toList(),
+                      onTapViewAll: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => const ViewAllPage(
+                            title: kCentersText,
+                            viewAllPath: kCentersPath,
+                          ),
+                        ));
+                      },
+                      cardListViewHeight: kCentersViewHeight,
                     );
                   },
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: kSP20x,
                 ),
 
                 ///Local And International Relationship View
@@ -116,29 +144,42 @@ class HomePage extends StatelessWidget {
                   selector: (_, bloc) => bloc.getLocalAndInternationalRelationsList,
                   builder: (_, localAndInternationalRelationsList, __) {
                     if (localAndInternationalRelationsList == null) {
-                      return const _CardImageHorizontalEmptyView(
-                        height: 250,
+                      return const _CardImageHorizontalLoadingView(
+                        height: kLocalAndInternationalRelationshipsViewHeight,
                       );
                     }
                     if (localAndInternationalRelationsList.isEmpty) {
-                      return const Center(
-                        child: Text("Local And International Relationships data is empty in database"),
-                      );
+                      return const DataEmptyWidget();
                     }
 
                     return CardImageHorizontalListWidget(
-                      title: 'Local And International Relationships',
-                      cardListViewHeight: 250,
-                      imageList: localAndInternationalRelationsList.map((e) => e.url).toList(),
+                      onTapImageCard: (image, description) {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => DetailsPage(image: image, description: description)));
+                      },
+                      title: kLocalAndInternationalRelationShipsText,
+                      cardListViewHeight: kLocalAndInternationalRelationshipsViewHeight,
+                      imageAndDescList: localAndInternationalRelationsList
+                          .map(
+                            (e) => (
+                              e.url,
+                              e.description,
+                            ),
+                          )
+                          .toList(),
                       onTapViewAll: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ComingSoonPage()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => const ViewAllPage(
+                            title: kLocalAndInternationalRelationShipsText,
+                            viewAllPath: kLocalAndInternationalRelationsPath,
+                          ),
+                        ));
                       },
                     );
                   },
                 ),
 
                 const SizedBox(
-                  height: 50,
+                  height: kSP50x,
                 ),
               ],
             ),
@@ -149,17 +190,17 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class _BannerEmptyView extends StatelessWidget {
-  const _BannerEmptyView();
+class _BannerLoadingView extends StatelessWidget {
+  const _BannerLoadingView();
 
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
       itemCount: 3,
       itemBuilder: (_, index) => const Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(kSP10x),
         child: ShimmerLoadingWidget(
-          height: 300,
+          height: kBannerViewHeight,
           width: double.infinity,
         ),
       ),
@@ -181,18 +222,6 @@ class _BannerView extends StatefulWidget {
 class _BannerViewState extends State<_BannerView> {
   final _pageController = PageController();
   int _pageIndex = 0;
-
-  // @override
-  // void initState() {
-  //   Timer.periodic(
-  //       const Duration(
-  //         seconds: 2,
-  //       ), (_) {
-  //     _pageController.animateToPage(_pageIndex, duration: const Duration(seconds: 1), curve: Curves.linear);
-  //     //  _pageController.jumpToPage(_pageIndex == widget.bannerList.length - 1 ? 0 : ++_pageIndex);
-  //   });
-  //   super.initState();
-  // }
 
   @override
   void dispose() {
@@ -216,9 +245,9 @@ class _BannerViewState extends State<_BannerView> {
             controller: _pageController,
             itemCount: widget.bannerList.length,
             itemBuilder: (_, index) => Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(kSP10x),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(kSP10x),
                 child: CachedNetworkImage(
                   imageUrl: widget.bannerList[index].url,
                   fit: BoxFit.cover,
@@ -231,7 +260,7 @@ class _BannerViewState extends State<_BannerView> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.only(
-                bottom: 20,
+                bottom: kSP20x,
               ),
               child: CustomIndicatorWidget(
                 onTapIndicator: (index) {
@@ -247,8 +276,8 @@ class _BannerViewState extends State<_BannerView> {
   }
 }
 
-class _CardImageHorizontalEmptyView extends StatelessWidget {
-  const _CardImageHorizontalEmptyView({
+class _CardImageHorizontalLoadingView extends StatelessWidget {
+  const _CardImageHorizontalLoadingView({
     required this.height,
   });
 
@@ -259,15 +288,17 @@ class _CardImageHorizontalEmptyView extends StatelessWidget {
     return SizedBox(
       height: height,
       child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(
+          horizontal: kSP10x,
+        ),
         scrollDirection: Axis.horizontal,
         itemBuilder: (_, index) => Padding(
           padding: const EdgeInsets.only(
-            right: 10,
+            right: kSP10x,
           ),
           child: ShimmerLoadingWidget(
             height: height,
-            width: 300,
+            width: kShimmerLoadingViewDefaultWidth,
           ),
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:color_ado/resources/dimens.dart';
 import 'package:flutter/material.dart';
 
 class CustomIndicatorWidget extends StatelessWidget {
@@ -28,12 +29,14 @@ class CustomIndicatorWidget extends StatelessWidget {
         (index) => GestureDetector(
           onTap: () => onTapIndicator(index),
           child: AnimatedContainer(
-            margin: const EdgeInsets.only(right: 10),
-            duration: const Duration(milliseconds: 500),
-            width: pageIndex == index ? 21 : 12,
-            height: height ?? 3,
+            margin: const EdgeInsets.only(
+              right: kSP10x,
+            ),
+            duration: kDuration500MilliSeconds,
+            width: pageIndex == index ? kCustomIndicatorWidgetActiveWidth : kCustomIndicatorWidgetInActiveWidth,
+            height: height ?? kCustomIndicatorWidgetHeight,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(kSP20x),
               color: pageIndex == index ? activeColor ?? Colors.white : inActiveColor ?? Colors.white.withOpacity(0.4),
             ),
           ),

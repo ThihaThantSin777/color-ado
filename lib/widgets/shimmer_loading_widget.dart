@@ -1,3 +1,4 @@
+import 'package:color_ado/resources/dimens.dart';
 import 'package:flutter/material.dart';
 
 class ShimmerLoadingWidget extends StatefulWidget {
@@ -21,7 +22,7 @@ class _ShimmerLoadingWidgetState extends State<ShimmerLoadingWidget> with Single
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: kDuration2Seconds,
       vsync: this,
     )..repeat();
   }
@@ -56,10 +57,11 @@ class _ShimmerLoadingWidgetState extends State<ShimmerLoadingWidget> with Single
             blendMode: BlendMode.srcATop,
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(
-                    10,
-                  )),
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(
+                  kSP10x,
+                ),
+              ),
             ),
           ),
         );

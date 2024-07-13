@@ -1,4 +1,5 @@
 import 'package:color_ado/pages/users/index_page.dart';
+import 'package:color_ado/resources/dimens.dart';
 import 'package:color_ado/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(kDuration2Seconds, () {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => const IndexPage()),
         (route) => false,
@@ -27,7 +28,7 @@ class _SplashPageState extends State<SplashPage> {
       backgroundColor: Colors.blue,
       body: Center(
         child: Image.asset(
-          width: 200,
+          width: kSplashLogoImageHeight,
           ImageUtils.kAppLogo,
         ),
       ),

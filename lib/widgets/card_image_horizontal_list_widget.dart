@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:color_ado/resources/dimens.dart';
+import 'package:color_ado/resources/strings.dart';
 import 'package:flutter/material.dart';
 
 class CardImageHorizontalListWidget extends StatelessWidget {
@@ -7,15 +9,20 @@ class CardImageHorizontalListWidget extends StatelessWidget {
     required this.title,
     this.viewAllTitle,
     required this.onTapViewAll,
-    required this.imageList,
-    this.cardListViewHeight = 150,
+    required this.imageAndDescList,
+    this.cardListViewHeight = kCardImageHorizontalListHeight,
+    required this.onTapImageCard,
   });
 
   final String title;
   final String? viewAllTitle;
   final Function onTapViewAll;
-  final List<String> imageList;
+  final List<(String image, String description)> imageAndDescList;
   final double cardListViewHeight;
+  final Function(
+    String image,
+    String description,
+  ) onTapImageCard;
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +31,14 @@ class CardImageHorizontalListWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: kSP20x),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: kFontSize16x,
                   color: Colors.blue,
                   fontWeight: FontWeight.w600,
                 ),
@@ -41,9 +48,9 @@ class CardImageHorizontalListWidget extends StatelessWidget {
                   onTapViewAll();
                 },
                 child: Text(
-                  viewAllTitle ?? 'View all',
+                  viewAllTitle ?? kViewAllText,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: kFontSize16x,
                     color: Colors.blue,
                     fontWeight: FontWeight.w600,
                   ),
@@ -53,16 +60,21 @@ class CardImageHorizontalListWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 10,
+          height: kSP10x,
         ),
         SizedBox(
           height: cardListViewHeight,
           child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: kSP10x),
             scrollDirection: Axis.horizontal,
-            children: imageList
-                .map((e) => _ImageCardView(
-                      image: e,
+            children: imageAndDescList
+                .map((e) => GestureDetector(
+                      onTap: () {
+                        onTapImageCard(e.$1, e.$2);
+                      },
+                      child: _ImageCardView(
+                        image: e.$1,
+                      ),
                     ))
                 .toList(),
           ),
@@ -83,10 +95,15 @@ class _ImageCardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: CachedNetworkImage(
-          imageUrl: image,
-          fit: BoxFit.cover,
+        borderRadius: BorderRadius.circular(
+          kSP10x,
+        ),
+        child: Hero(
+          tag: image,
+          child: CachedNetworkImage(
+            imageUrl: image,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

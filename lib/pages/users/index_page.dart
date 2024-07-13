@@ -1,6 +1,8 @@
-import 'package:color_ado/bloc/index_bloc.dart';
-import 'package:color_ado/pages/users/coming_soon_page.dart';
+import 'package:color_ado/bloc/users/index_bloc.dart';
+import 'package:color_ado/pages/coming_soon_page.dart';
 import 'package:color_ado/pages/users/home_page.dart';
+import 'package:color_ado/resources/strings.dart';
+import 'package:color_ado/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,10 +15,10 @@ class IndexPage extends StatelessWidget {
       create: (_) => IndexBloc(),
       child: Scaffold(
         bottomNavigationBar: const _IndexBottomNavigationBarView(),
-        body: Selector<IndexBloc, int>(
+        body: Selector<IndexBloc, UserBottomNavigationBarIndex>(
             selector: (_, bloc) => bloc.getActiveIndex,
             builder: (_, activeIndex, __) => IndexedStack(
-                  index: activeIndex,
+                  index: activeIndex.index,
                   children: const [
                     HomePage(),
                     ComingSoonPage(),
@@ -34,16 +36,16 @@ class _IndexBottomNavigationBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<IndexBloc, int>(
+    return Selector<IndexBloc, UserBottomNavigationBarIndex>(
         selector: (_, bloc) => bloc.getActiveIndex,
         builder: (_, activeIndex, __) {
           return BottomNavigationBar(
             selectedItemColor: Colors.blue,
             unselectedItemColor: Colors.grey,
-            currentIndex: activeIndex,
+            currentIndex: activeIndex.index,
             onTap: (index) {
               final bloc = context.read<IndexBloc>();
-              bloc.setActiveIndex = index;
+              bloc.setActiveIndex = UserBottomNavigationBarIndex.values.elementAt(index);
             },
             items: const [
               BottomNavigationBarItem(
@@ -54,7 +56,7 @@ class _IndexBottomNavigationBarView extends StatelessWidget {
                 icon: Icon(
                   Icons.home,
                 ),
-                label: 'Home',
+                label: kHomeBottomNavigationBar,
               ),
               BottomNavigationBarItem(
                 activeIcon: Icon(
@@ -64,7 +66,7 @@ class _IndexBottomNavigationBarView extends StatelessWidget {
                 icon: Icon(
                   Icons.newspaper,
                 ),
-                label: 'News',
+                label: kNewsBottomNavigationBar,
               ),
               BottomNavigationBarItem(
                 activeIcon: Icon(
@@ -74,7 +76,7 @@ class _IndexBottomNavigationBarView extends StatelessWidget {
                 icon: Icon(
                   Icons.event,
                 ),
-                label: 'Events',
+                label: kCUEventsBottomNavigationBar,
               ),
               BottomNavigationBarItem(
                 activeIcon: Icon(
@@ -84,7 +86,7 @@ class _IndexBottomNavigationBarView extends StatelessWidget {
                 icon: Icon(
                   Icons.settings,
                 ),
-                label: 'Settings',
+                label: kSettingBottomNavigationBar,
               ),
             ],
           );
