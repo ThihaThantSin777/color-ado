@@ -40,6 +40,7 @@ class HomeDetailsPage extends StatelessWidget {
                   description,
                   style: const TextStyle(
                     fontSize: kFontSize16x,
+                    height: 2.3,
                   ),
                 )
               ],
