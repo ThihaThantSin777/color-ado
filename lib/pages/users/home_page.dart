@@ -9,6 +9,7 @@ import 'package:color_ado/data/vos/local_and_international_relations_vo/local_an
 import 'package:color_ado/pages/users/coming_soon_page.dart';
 import 'package:color_ado/widgets/card_image_horizontal_list_widget.dart';
 import 'package:color_ado/widgets/custom_indicator_widget.dart';
+import 'package:color_ado/widgets/shimmer_loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,7 @@ class HomePage extends StatelessWidget {
                     selector: (_, bloc) => bloc.getBannerList,
                     builder: (_, bannerList, __) {
                       if (bannerList == null) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const _BannerEmptyView();
                       }
                       if (bannerList.isEmpty) {
                         return const Center(
@@ -58,7 +59,9 @@ class HomePage extends StatelessWidget {
                   selector: (_, bloc) => bloc.getFacilitiesList,
                   builder: (_, facilitiesList, __) {
                     if (facilitiesList == null) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const _CardImageHorizontalEmptyView(
+                        height: 150,
+                      );
                     }
                     if (facilitiesList.isEmpty) {
                       return const Center(
@@ -84,7 +87,9 @@ class HomePage extends StatelessWidget {
                   selector: (_, bloc) => bloc.getCentersList,
                   builder: (_, centersList, __) {
                     if (centersList == null) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const _CardImageHorizontalEmptyView(
+                        height: 200,
+                      );
                     }
                     if (centersList.isEmpty) {
                       return const Center(
@@ -111,7 +116,9 @@ class HomePage extends StatelessWidget {
                   selector: (_, bloc) => bloc.getLocalAndInternationalRelationsList,
                   builder: (_, localAndInternationalRelationsList, __) {
                     if (localAndInternationalRelationsList == null) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const _CardImageHorizontalEmptyView(
+                        height: 250,
+                      );
                     }
                     if (localAndInternationalRelationsList.isEmpty) {
                       return const Center(
@@ -142,6 +149,24 @@ class HomePage extends StatelessWidget {
   }
 }
 
+class _BannerEmptyView extends StatelessWidget {
+  const _BannerEmptyView();
+
+  @override
+  Widget build(BuildContext context) {
+    return PageView.builder(
+      itemCount: 3,
+      itemBuilder: (_, index) => const Padding(
+        padding: EdgeInsets.all(8.0),
+        child: ShimmerLoadingWidget(
+          height: 300,
+          width: double.infinity,
+        ),
+      ),
+    );
+  }
+}
+
 class _BannerView extends StatefulWidget {
   const _BannerView({
     required this.bannerList,
@@ -157,16 +182,17 @@ class _BannerViewState extends State<_BannerView> {
   final _pageController = PageController();
   int _pageIndex = 0;
 
-  @override
-  void initState() {
-    Timer.periodic(
-        const Duration(
-          seconds: 2,
-        ), (_) {
-      _pageController.jumpToPage(_pageIndex == widget.bannerList.length - 1 ? 0 : ++_pageIndex);
-    });
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   Timer.periodic(
+  //       const Duration(
+  //         seconds: 2,
+  //       ), (_) {
+  //     _pageController.animateToPage(_pageIndex, duration: const Duration(seconds: 1), curve: Curves.linear);
+  //     //  _pageController.jumpToPage(_pageIndex == widget.bannerList.length - 1 ? 0 : ++_pageIndex);
+  //   });
+  //   super.initState();
+  // }
 
   @override
   void dispose() {
@@ -179,26 +205,33 @@ class _BannerViewState extends State<_BannerView> {
     return Stack(
       children: [
         Positioned.fill(
-            child: PageView.builder(
-          onPageChanged: (index) {
-            if (mounted) {
-              setState(() {
-                _pageIndex = index;
-              });
-            }
-          },
-          controller: _pageController,
-          itemCount: widget.bannerList.length,
-          itemBuilder: (_, index) => CachedNetworkImage(
-            imageUrl: widget.bannerList[index].url,
-            fit: BoxFit.cover,
+          child: PageView.builder(
+            onPageChanged: (index) {
+              if (mounted) {
+                setState(() {
+                  _pageIndex = index;
+                });
+              }
+            },
+            controller: _pageController,
+            itemCount: widget.bannerList.length,
+            itemBuilder: (_, index) => Padding(
+              padding: const EdgeInsets.all(10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: CachedNetworkImage(
+                  imageUrl: widget.bannerList[index].url,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ),
-        )),
+        ),
         Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.only(
-                bottom: 10,
+                bottom: 20,
               ),
               child: CustomIndicatorWidget(
                 onTapIndicator: (index) {
@@ -210,6 +243,34 @@ class _BannerViewState extends State<_BannerView> {
               ),
             )),
       ],
+    );
+  }
+}
+
+class _CardImageHorizontalEmptyView extends StatelessWidget {
+  const _CardImageHorizontalEmptyView({
+    required this.height,
+  });
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+      child: ListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (_, index) => Padding(
+          padding: const EdgeInsets.only(
+            right: 10,
+          ),
+          child: ShimmerLoadingWidget(
+            height: height,
+            width: 300,
+          ),
+        ),
+      ),
     );
   }
 }

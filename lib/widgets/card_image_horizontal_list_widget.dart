@@ -58,7 +58,7 @@ class CardImageHorizontalListWidget extends StatelessWidget {
         SizedBox(
           height: cardListViewHeight,
           child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             scrollDirection: Axis.horizontal,
             children: imageList
                 .map((e) => _ImageCardView(
