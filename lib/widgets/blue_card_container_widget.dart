@@ -55,15 +55,28 @@ class BlueCardContainerWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: kSP5x,
+            height: kSP10x,
           ),
           Align(
             alignment: Alignment.centerRight,
-            child: Text(
-              createdAt.getMonthDayYear,
-              style: const TextStyle(
-                color: Colors.white,
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.date_range,
+                  color: Colors.white,
+                  size: kBlueCardDateIconSize,
+                ),
+                const SizedBox(
+                  width: kSP10x,
+                ),
+                Text(
+                  createdAt.getMonthDayYear,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(

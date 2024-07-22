@@ -1,5 +1,6 @@
 import 'package:color_ado/bloc/users/index_bloc.dart';
 import 'package:color_ado/pages/coming_soon_page.dart';
+import 'package:color_ado/pages/users/home/cu_events_page.dart';
 import 'package:color_ado/pages/users/home/home_page.dart';
 import 'package:color_ado/pages/users/home/news_page.dart';
 import 'package:color_ado/resources/strings.dart';
@@ -23,7 +24,7 @@ class IndexPage extends StatelessWidget {
                   children: const [
                     HomePage(),
                     NewsPage(),
-                    ComingSoonPage(),
+                    CUEventsPage(),
                     ComingSoonPage(),
                   ],
                 )),

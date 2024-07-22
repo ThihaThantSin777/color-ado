@@ -1,5 +1,6 @@
 import 'package:color_ado/data/vos/banner_vo/banner_vo.dart';
 import 'package:color_ado/data/vos/centers_vo/centers_vo.dart';
+import 'package:color_ado/data/vos/cu_events_vo/cu_events_vo.dart';
 import 'package:color_ado/data/vos/facilities_vo/facilities_vo.dart';
 import 'package:color_ado/data/vos/local_and_international_relations_vo/local_and_international_relations_vo.dart';
 import 'package:color_ado/data/vos/news_vo/news_vo.dart';
@@ -56,6 +57,15 @@ class ColorAdoDataAgentImpl extends ColorAdoDataAgent {
     return databaseRef.child(kNewsPath).onValue.map((event) {
       return event.snapshot.children.map<NewsVO>((snapshot) {
         return NewsVO.fromJson(Map<String, dynamic>.from(snapshot.value as Map));
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<CUEventsVO>> getCUEvents() {
+    return databaseRef.child(kCUEventsPath).onValue.map((event) {
+      return event.snapshot.children.map<CUEventsVO>((snapshot) {
+        return CUEventsVO.fromJson(Map<String, dynamic>.from(snapshot.value as Map));
       }).toList();
     });
   }

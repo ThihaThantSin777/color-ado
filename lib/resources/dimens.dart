@@ -38,7 +38,8 @@ const kDetailsPageImageHeight = 300.0;
 const kCardImageHorizontalListHeight = 150.0;
 
 ///Blue Card Container Height
-const kBlueCardContainerHeight = 270.0;
+const kBlueCardContainerHeight = 265.0;
+const kBlueCardDateIconSize = 14.0;
 
 ///Font Size
 const kFontSize16x = 16.0;

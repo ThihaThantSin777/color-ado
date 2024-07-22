@@ -6,4 +6,14 @@ extension StringExtension on String {
     final DateFormat format = DateFormat('MMMM d, yyyy');
     return format.format(date);
   }
+
+  String get getYearMonthDay {
+    final date = DateTime.parse(this);
+    final DateFormat format = DateFormat('yyyy-MM-dd');
+    return format.format(date);
+  }
+
+  DateTime get parseDateTimeFromString => DateTime.parse(this);
+
+  String addS(int count) => (count <= 0) ? this : '${this}s';
 }
