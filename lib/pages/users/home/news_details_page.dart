@@ -32,7 +32,7 @@ class NewsDetailsPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: kSP10x,
+                  height: kSP20x,
                 ),
                 Text(
                   description,
