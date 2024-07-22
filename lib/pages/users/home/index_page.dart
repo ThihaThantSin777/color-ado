@@ -1,6 +1,7 @@
 import 'package:color_ado/bloc/users/index_bloc.dart';
 import 'package:color_ado/pages/coming_soon_page.dart';
 import 'package:color_ado/pages/users/home/home_page.dart';
+import 'package:color_ado/pages/users/home/news_page.dart';
 import 'package:color_ado/resources/strings.dart';
 import 'package:color_ado/utils/enums.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class IndexPage extends StatelessWidget {
                   index: activeIndex.index,
                   children: const [
                     HomePage(),
-                    ComingSoonPage(),
+                    NewsPage(),
                     ComingSoonPage(),
                     ComingSoonPage(),
                   ],

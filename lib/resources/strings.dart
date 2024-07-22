@@ -17,3 +17,4 @@ const kBannerPath = 'banner';
 const kFacilitiesPath = 'facilities';
 const kCentersPath = 'centers';
 const kLocalAndInternationalRelationsPath = 'local_and_international_relations';
+const kNewsPath = 'news';

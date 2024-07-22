@@ -37,5 +37,10 @@ const kDetailsPageImageHeight = 300.0;
 ///Card Image Horizontal List Default Height
 const kCardImageHorizontalListHeight = 150.0;
 
+///Blue Card Container Height
+const kBlueCardContainerHeight = 270.0;
+
 ///Font Size
 const kFontSize16x = 16.0;
+const kFontSize18x = 18.0;
+const kFontSize22x = 22.0;
