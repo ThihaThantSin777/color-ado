@@ -3,7 +3,7 @@ import 'package:color_ado/bloc/users/view_all_bloc.dart';
 import 'package:color_ado/data/vos/centers_vo/centers_vo.dart';
 import 'package:color_ado/data/vos/facilities_vo/facilities_vo.dart';
 import 'package:color_ado/data/vos/local_and_international_relations_vo/local_and_international_relations_vo.dart';
-import 'package:color_ado/pages/users/home/home_details_page.dart';
+import 'package:color_ado/pages/users/home_details_page.dart';
 import 'package:color_ado/resources/dimens.dart';
 import 'package:color_ado/resources/strings.dart';
 import 'package:color_ado/widgets/data_empty_widget.dart';

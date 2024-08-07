@@ -1,4 +1,4 @@
-import 'package:color_ado/pages/users/splash_page.dart';
+import 'package:color_ado/pages/users/index_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Color Ado',
-      home: SplashPage(),
+      home: IndexPage(),
     );
   }
 }

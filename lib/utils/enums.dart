@@ -4,3 +4,9 @@ enum UserBottomNavigationBarIndex {
   kCUEvents,
   kSetting,
 }
+
+enum LoadingState {
+  kLoading,
+  kError,
+  kSuccess,
+}

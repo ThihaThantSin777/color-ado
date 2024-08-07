@@ -13,6 +13,8 @@ LocalAndInternationalRelationsVO _$LocalAndInternationalRelationsVOFromJson(
       title: json['title'] as String,
       description: json['description'] as String,
       url: json['url'] as String,
+      pdfName: json['pdfName'] as String,
+      pdfURL: json['pdfURL'] as String,
     );
 
 Map<String, dynamic> _$LocalAndInternationalRelationsVOToJson(
@@ -22,4 +24,6 @@ Map<String, dynamic> _$LocalAndInternationalRelationsVOToJson(
       'title': instance.title,
       'description': instance.description,
       'url': instance.url,
+      'pdfName': instance.pdfName,
+      'pdfURL': instance.pdfURL,
     };

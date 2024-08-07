@@ -1,8 +1,9 @@
 import 'package:color_ado/bloc/users/index_bloc.dart';
 import 'package:color_ado/pages/coming_soon_page.dart';
-import 'package:color_ado/pages/users/home/cu_events_page.dart';
-import 'package:color_ado/pages/users/home/home_page.dart';
-import 'package:color_ado/pages/users/home/news_page.dart';
+import 'package:color_ado/pages/users/cu_events_page.dart';
+import 'package:color_ado/pages/users/home_page.dart';
+import 'package:color_ado/pages/users/news_page.dart';
+import 'package:color_ado/pages/users/setting_page.dart';
 import 'package:color_ado/resources/strings.dart';
 import 'package:color_ado/utils/enums.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class IndexPage extends StatelessWidget {
                     HomePage(),
                     NewsPage(),
                     CUEventsPage(),
-                    ComingSoonPage(),
+                    SettingPage(),
                   ],
                 )),
       ),

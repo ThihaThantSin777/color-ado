@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:intl/intl.dart';
 
 extension StringExtension on String {
@@ -16,4 +18,12 @@ extension StringExtension on String {
   DateTime get parseDateTimeFromString => DateTime.parse(this);
 
   String addS(int count) => (count <= 0) ? this : '${this}s';
+
+  bool get isNetworkImage {
+    return Uri.parse(this).isAbsolute;
+  }
+
+  bool get isFileImage {
+    return File(this).existsSync();
+  }
 }

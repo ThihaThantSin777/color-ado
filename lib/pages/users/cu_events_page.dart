@@ -1,6 +1,6 @@
 import 'package:color_ado/bloc/users/cu_events_bloc.dart';
 import 'package:color_ado/data/vos/cu_events_vo/cu_events_vo.dart';
-import 'package:color_ado/pages/users/home/cu_events_details_page.dart';
+import 'package:color_ado/pages/users/cu_events_details_page.dart';
 import 'package:color_ado/resources/dimens.dart';
 import 'package:color_ado/utils/string_extensions.dart';
 import 'package:color_ado/widgets/blue_card_container_widget.dart';

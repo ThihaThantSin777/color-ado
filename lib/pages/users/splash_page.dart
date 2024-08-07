@@ -1,4 +1,4 @@
-import 'package:color_ado/pages/users/home/index_page.dart';
+import 'package:color_ado/pages/users/index_page.dart';
 import 'package:color_ado/resources/dimens.dart';
 import 'package:color_ado/utils/image_utils.dart';
 import 'package:flutter/material.dart';

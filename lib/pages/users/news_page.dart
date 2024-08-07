@@ -1,6 +1,6 @@
 import 'package:color_ado/bloc/users/news_bloc.dart';
 import 'package:color_ado/data/vos/news_vo/news_vo.dart';
-import 'package:color_ado/pages/users/home/news_details_page.dart';
+import 'package:color_ado/pages/users/news_details_page.dart';
 import 'package:color_ado/resources/dimens.dart';
 import 'package:color_ado/widgets/blue_card_container_widget.dart';
 import 'package:color_ado/widgets/data_empty_widget.dart';

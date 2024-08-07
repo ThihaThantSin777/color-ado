@@ -8,12 +8,16 @@ class LocalAndInternationalRelationsVO {
   final String title;
   final String description;
   final String url;
+  final String pdfName;
+  final String pdfURL;
 
   LocalAndInternationalRelationsVO({
     required this.id,
     required this.title,
     required this.description,
     required this.url,
+    required this.pdfName,
+    required this.pdfURL,
   });
 
   factory LocalAndInternationalRelationsVO.fromJson(Map<String, dynamic> json) => _$LocalAndInternationalRelationsVOFromJson(json);
