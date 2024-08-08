@@ -67,4 +67,8 @@ class ColorAdoModel {
   Stream<List<SettingVO>> getSettingList() => _adoDataAgent.getSettingList();
 
   Future login(String email, String password) => _adoDataAgent.login(email, password);
+
+  Future createToken(String token) => _adoDataAgent.createToken(token);
+
+  Future<List<String>> getTokenList() => _adoDataAgent.getTokenList();
 }

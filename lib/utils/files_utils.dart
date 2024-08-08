@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -24,17 +23,8 @@ class FilesUtils {
     );
 
     if (path != null) {
-      return File(path ?? '');
+      return File(path);
     }
     return null;
-    // FilePickerResult? result = await FilePicker.platform.pickFiles(
-    //   type: FileType.custom,
-    //   allowedExtensions: ['pdf'],
-    //   allowMultiple: false,
-    // );
-    // if (result != null) {
-    //   return File(result.files.single.path!);
-    // }
-    // return null;
   }
 }

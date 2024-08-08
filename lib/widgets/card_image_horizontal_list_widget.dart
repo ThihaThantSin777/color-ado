@@ -37,13 +37,18 @@ class CardImageHorizontalListWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: kFontSize16x,
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w600,
+              Flexible(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: kFontSize16x,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
+              ),
+              const SizedBox(
+                width: 20,
               ),
               GestureDetector(
                 onTap: () {

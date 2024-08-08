@@ -8,6 +8,7 @@ import 'package:color_ado/data/vos/local_and_international_relations_vo/local_an
 import 'package:color_ado/data/vos/news_vo/news_vo.dart';
 import 'package:color_ado/data/vos/setting_vo/setting_vo.dart';
 import 'package:color_ado/data/vos/user_vo/user_vo.dart';
+import 'package:color_ado/database/share_preferences_dao.dart';
 import 'package:color_ado/network/data_agent/color_ado_data_agents.dart';
 import 'package:color_ado/resources/strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -133,4 +134,23 @@ class ColorAdoDataAgentImpl extends ColorAdoDataAgent {
 
   @override
   Future login(String email, String password) => auth.signInWithEmailAndPassword(email: email, password: password);
+
+  @override
+  Future createToken(String token) async {
+    final uID = await SharePreferencesDAO.getUserID();
+    if (uID != null) {
+      return databaseRef.child(kTokenPath).child(uID.toString()).set({kTokenPath: token});
+    }
+    final id = DateTime.now().microsecondsSinceEpoch;
+    await SharePreferencesDAO.saveUserID(id);
+    return databaseRef.child(kTokenPath).child(id.toString()).set({kTokenPath: token});
+  }
+
+  @override
+  Future<List<String>> getTokenList() async {
+    final rawData = await databaseRef.child(kTokenPath).get();
+    final rawMap = rawData.value as Map<Object?, Object?>;
+    List tokens = rawMap.values.map((e) => (e as Map)['token']).toList();
+    return tokens.map((element) => element.toString()).toList();
+  }
 }

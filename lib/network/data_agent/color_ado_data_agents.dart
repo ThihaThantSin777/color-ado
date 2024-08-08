@@ -40,4 +40,8 @@ abstract class ColorAdoDataAgent {
   );
 
   Future login(String email, String password);
+
+  Future createToken(String token);
+
+  Future<List<String>> getTokenList();
 }

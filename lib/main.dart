@@ -1,4 +1,5 @@
 import 'package:color_ado/pages/users/index_page.dart';
+import 'package:color_ado/service/fcm_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -11,18 +12,22 @@ void main() async {
     messagingSenderId: '39907433298',
     projectId: 'color-ado-334c0',
   ));
+  await FcmService().init();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  static final navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Color Ado',
-      home: IndexPage(),
+      home: const IndexPage(),
     );
   }
 }

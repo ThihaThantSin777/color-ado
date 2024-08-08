@@ -9,7 +9,9 @@ import 'package:color_ado/data/vos/facilities_vo/facilities_vo.dart';
 import 'package:color_ado/data/vos/local_and_international_relations_vo/local_and_international_relations_vo.dart';
 import 'package:color_ado/data/vos/news_vo/news_vo.dart';
 import 'package:color_ado/data/vos/setting_vo/setting_vo.dart';
+import 'package:color_ado/network/notification_api/notification_api.dart';
 import 'package:color_ado/resources/strings.dart';
+import 'package:color_ado/service/fcm_service.dart';
 import 'package:color_ado/utils/string_extensions.dart';
 
 class CreateEditBloc extends BaseBloc {
@@ -176,7 +178,12 @@ class CreateEditBloc extends BaseBloc {
 
     if (_path == kCUEventsPath) {
       CUEventsVO cuEventsVO = CUEventsVO(id, _title ?? '', _description ?? '', DateTime.now().toString());
-      return _colorAdoModel.addEditData(cuEventsVO.id, kCUEventsPath, cuEventsVO.toJson());
+      return _colorAdoModel.addEditData(cuEventsVO.id, kCUEventsPath, cuEventsVO.toJson()).then((_) async {
+        final tokens = await _colorAdoModel.getTokenList();
+        tokens.removeWhere((element) => element == FcmService.fcmToken);
+        final payload = '$_title|$_description';
+        NotificationAPI.sendFCMMessage(_title ?? '', 'Please check new events', payload, tokens);
+      });
     }
 
     if (_path == kFacilitiesPath) {

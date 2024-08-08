@@ -22,3 +22,4 @@ const kNewsPath = 'news';
 const kCUEventsPath = 'cu_events';
 const kUserPath = 'user';
 const kPDFPath = 'pdf';
+const kTokenPath = 'token';
