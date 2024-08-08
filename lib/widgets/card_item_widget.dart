@@ -34,12 +34,14 @@ class CardItemWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: kFontSize16x,
-                  fontWeight: FontWeight.w600,
+              Flexible(
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: kFontSize16x,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               )
             ],

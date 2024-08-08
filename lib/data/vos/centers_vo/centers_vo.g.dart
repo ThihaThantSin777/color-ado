@@ -11,6 +11,8 @@ CentersVO _$CentersVOFromJson(Map<String, dynamic> json) => CentersVO(
       title: json['title'] as String,
       description: json['description'] as String,
       url: json['url'] as String,
+      pdfURL: json['pdfURL'] as String?,
+      pdfName: json['pdfName'] as String?,
     );
 
 Map<String, dynamic> _$CentersVOToJson(CentersVO instance) => <String, dynamic>{
@@ -18,4 +20,6 @@ Map<String, dynamic> _$CentersVOToJson(CentersVO instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'url': instance.url,
+      'pdfName': instance.pdfName,
+      'pdfURL': instance.pdfURL,
     };

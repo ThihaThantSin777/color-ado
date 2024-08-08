@@ -68,9 +68,17 @@ class HomePage extends StatelessWidget {
                     }
 
                     return CardImageHorizontalListWidget(
-                      onTapImageCard: (image, description) {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (_) => HomeDetailsPage(image: image, description: description)));
+                      onTapImageCard: (image, description, pdfName, pdfUrl) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => HomeDetailsPage(
+                              image: image,
+                              description: description,
+                              pdfName: pdfName,
+                              pdfUrl: pdfUrl,
+                            ),
+                          ),
+                        );
                       },
                       title: kFacilitiesText,
                       imageAndDescList: facilitiesList
@@ -78,6 +86,8 @@ class HomePage extends StatelessWidget {
                             (e) => (
                               e.url,
                               e.description,
+                              e.pdfName,
+                              e.pdfURL,
                             ),
                           )
                           .toList(),
@@ -112,9 +122,14 @@ class HomePage extends StatelessWidget {
                     }
 
                     return CardImageHorizontalListWidget(
-                      onTapImageCard: (image, description) {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (_) => HomeDetailsPage(image: image, description: description)));
+                      onTapImageCard: (image, description, pdfName, pdfUrl) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => HomeDetailsPage(
+                                  image: image,
+                                  description: description,
+                                  pdfName: pdfName,
+                                  pdfUrl: pdfUrl,
+                                )));
                       },
                       title: kCentersText,
                       imageAndDescList: centersList
@@ -122,6 +137,8 @@ class HomePage extends StatelessWidget {
                             (e) => (
                               e.url,
                               e.description,
+                              e.pdfName,
+                              e.pdfURL,
                             ),
                           )
                           .toList(),
@@ -155,9 +172,14 @@ class HomePage extends StatelessWidget {
                     }
 
                     return CardImageHorizontalListWidget(
-                      onTapImageCard: (image, description) {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (_) => HomeDetailsPage(image: image, description: description)));
+                      onTapImageCard: (image, description, pdfName, pdfUrl) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => HomeDetailsPage(
+                                  image: image,
+                                  description: description,
+                                  pdfName: pdfName,
+                                  pdfUrl: pdfUrl,
+                                )));
                       },
                       title: kLocalAndInternationalRelationShipsText,
                       cardListViewHeight: kLocalAndInternationalRelationshipsViewHeight,
@@ -166,6 +188,8 @@ class HomePage extends StatelessWidget {
                             (e) => (
                               e.url,
                               e.description,
+                              e.pdfName,
+                              e.pdfURL,
                             ),
                           )
                           .toList(),

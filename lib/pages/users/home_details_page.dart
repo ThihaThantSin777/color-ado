@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_ado/resources/dimens.dart';
+import 'package:color_ado/utils/launcher_utils.dart';
 import 'package:flutter/material.dart';
 
 class HomeDetailsPage extends StatelessWidget {
@@ -7,10 +8,14 @@ class HomeDetailsPage extends StatelessWidget {
     super.key,
     required this.image,
     required this.description,
+    this.pdfName,
+    this.pdfUrl,
   });
 
   final String image;
   final String description;
+  final String? pdfName;
+  final String? pdfUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +47,33 @@ class HomeDetailsPage extends StatelessWidget {
                     fontSize: kFontSize16x,
                     height: 2.3,
                   ),
-                )
+                ),
+                const SizedBox(
+                  height: kSP10x,
+                ),
+                if ((pdfName?.isNotEmpty ?? false) && (pdfUrl?.isNotEmpty ?? false)) ...[
+                  const Divider(
+                    thickness: 1.2,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton.icon(
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          iconColor: Colors.white,
+                        ),
+                        icon: const Icon(Icons.download),
+                        onPressed: () {
+                          LauncherUtils.launchURL(pdfUrl ?? '');
+                        },
+                        label: Text(
+                          '$pdfName to Download here',
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+                        )),
+                  ),
+                ]
               ],
             ),
           ),

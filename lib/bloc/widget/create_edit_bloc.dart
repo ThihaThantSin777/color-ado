@@ -108,19 +108,23 @@ class CreateEditBloc extends BaseBloc {
       notifyListeners();
     }
 
-    if (_path == kCentersPath) {
-      _btnDisable = (_userSelectImage ?? '').isEmpty || (_title ?? '').isEmpty || (_description ?? '').isEmpty;
-      notifyListeners();
-    }
-
-    if (_path == kCUEventsPath || _path == kNewsPath) {
+    if (_path == kCUEventsPath) {
       _btnDisable = (_title ?? '').isEmpty || (_description ?? '').isEmpty;
       notifyListeners();
     }
 
-    if (_path == kFacilitiesPath || _path == kLocalAndInternationalRelationsPath) {
-      if ((_pdfName ?? '').isNotEmpty) {
-        _btnDisable = (_userSelectImage ?? '').isEmpty || (_title ?? '').isEmpty || (_description ?? '').isEmpty || (_pdfURL ?? '').isEmpty;
+    if (_path == kNewsPath) {
+      _btnDisable = (_title ?? '').isEmpty || (_description ?? '').isEmpty || (_userSelectImage ?? '').isEmpty;
+      notifyListeners();
+    }
+
+    if (_path == kFacilitiesPath || _path == kLocalAndInternationalRelationsPath || _path == kCentersPath) {
+      if ((_pdfName ?? '').isNotEmpty || (_pdfURL ?? '').isNotEmpty) {
+        _btnDisable = (_userSelectImage ?? '').isEmpty ||
+            (_title ?? '').isEmpty ||
+            (_description ?? '').isEmpty ||
+            (_pdfURL ?? '').isEmpty ||
+            (_pdfName ?? '').isEmpty;
       } else {
         _btnDisable = (_userSelectImage ?? '').isEmpty || (_title ?? '').isEmpty || (_description ?? '').isEmpty;
       }
@@ -134,6 +138,14 @@ class CreateEditBloc extends BaseBloc {
   }
 
   Future onTapSave(int id) async {
+    if (_pdfURL?.isNotEmpty ?? false) {
+      _pdfURL = await _colorAdoModel.uploadFileToFireStore(
+        File(
+          _pdfURL ?? '',
+        ),
+        kPDFPath,
+      );
+    }
     if (_userSelectImage?.isNotEmpty ?? false) {
       if ((_userSelectImage ?? '').isFileImage) {
         _userSelectImage = await _colorAdoModel.uploadFileToFireStore(
@@ -144,14 +156,7 @@ class CreateEditBloc extends BaseBloc {
         );
       }
     }
-    if (_pdfURL?.isNotEmpty ?? false) {
-      _pdfURL = await _colorAdoModel.uploadFileToFireStore(
-        File(
-          _userSelectImage ?? '',
-        ),
-        kPDFPath,
-      );
-    }
+
     if (_path == kBannerPath) {
       BannerVO bannerVO = BannerVO(id: id, url: _userSelectImage ?? '');
       return _colorAdoModel.addEditData(bannerVO.id, kBannerPath, bannerVO.toJson());
@@ -163,6 +168,8 @@ class CreateEditBloc extends BaseBloc {
         title: _title ?? '',
         description: _description ?? '',
         url: _userSelectImage ?? '',
+        pdfName: _pdfName ?? '',
+        pdfURL: _pdfURL ?? '',
       );
       return _colorAdoModel.addEditData(centersVO.id, kCentersPath, centersVO.toJson());
     }
@@ -197,7 +204,7 @@ class CreateEditBloc extends BaseBloc {
     }
 
     if (_path == kNewsPath) {
-      NewsVO newsVO = NewsVO(id, _title ?? '', _description ?? '', DateTime.now().toString());
+      NewsVO newsVO = NewsVO(id, _title ?? '', _description ?? '', DateTime.now().toString(), _userSelectImage ?? '');
       return _colorAdoModel.addEditData(newsVO.id, kNewsPath, newsVO.toJson());
     }
 

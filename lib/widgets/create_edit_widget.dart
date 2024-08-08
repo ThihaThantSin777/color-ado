@@ -203,7 +203,6 @@ class _PDFUploadView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         MaterialButton(
           textColor: Colors.white,
@@ -224,26 +223,31 @@ class _PDFUploadView extends StatelessWidget {
         Selector<CreateEditBloc, String?>(
             selector: (_, bloc) => bloc.getPDFUrl,
             builder: (_, pdfPath, __) {
-              print(pdfPath);
               if (pdfPath?.isNotEmpty ?? false) {
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(child: Text(pdfPath ?? '')),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    GestureDetector(
-                        onTap: () {
-                          final bloc = context.read<CreateEditBloc>();
-                          bloc.clearPDFURL();
-                        },
-                        child: const Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ))
-                  ],
+                return Flexible(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                          child: Text(
+                        pdfPath ?? '',
+                        maxLines: 2,
+                      )),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            final bloc = context.read<CreateEditBloc>();
+                            bloc.clearPDFURL();
+                          },
+                          child: const Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ))
+                    ],
+                  ),
                 );
               }
               return const SizedBox.shrink();

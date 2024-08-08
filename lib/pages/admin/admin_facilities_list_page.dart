@@ -44,7 +44,7 @@ class AdminFacilitiesListPage extends StatelessWidget {
         ),
         body: Selector<AdminFacilitiesListBloc, List<FacilitiesVO>?>(
           selector: (_, bloc) => bloc.getFacilitiesList,
-          builder: (_, facilitiesList, __) {
+          builder: (context, facilitiesList, __) {
             if (facilitiesList == null) {
               return const SizedBox();
             }
@@ -61,6 +61,7 @@ class AdminFacilitiesListPage extends StatelessWidget {
                 description: facilitiesList[index].description,
                 id: facilitiesList[index].id,
                 onTapDelete: () {
+                  final bloc = context.read<AdminFacilitiesListBloc>();
                   showDialog(
                       context: context,
                       builder: (_) => SampleDialogWidget.twoButton(
@@ -68,7 +69,7 @@ class AdminFacilitiesListPage extends StatelessWidget {
                             content: 'Are you sure want to delete?',
                             onButtonPressed: () {
                               Navigator.of(context).pop();
-                              final bloc = context.read<AdminFacilitiesListBloc>();
+
                               bloc.onTapDeleteFacilities(facilitiesList[index].id).then((_) {}).catchError((error) {
                                 Navigator.of(context).pop();
                                 showDialog(
@@ -102,6 +103,8 @@ class AdminFacilitiesListPage extends StatelessWidget {
                         prePDFName: facilitiesList[index].pdfName,
                         prePDFurl: facilitiesList[index].pdfURL,
                         preTitle: facilitiesList[index].title,
+                        isEnableUploadPDF: true,
+                        isEnablePDFName: true,
                         isEnableImage: true,
                         isEnableDescription: true,
                         isEnableTitle: true,

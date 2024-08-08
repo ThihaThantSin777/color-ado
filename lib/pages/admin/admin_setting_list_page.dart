@@ -41,7 +41,7 @@ class AdminSettingListPage extends StatelessWidget {
         ),
         body: Selector<AdminSettingListBloc, List<SettingVO>?>(
           selector: (_, bloc) => bloc.getSettingList,
-          builder: (_, settingList, __) {
+          builder: (context, settingList, __) {
             if (settingList == null) {
               return const SizedBox();
             }
@@ -57,6 +57,7 @@ class AdminSettingListPage extends StatelessWidget {
                 description: settingList[index].description,
                 id: settingList[index].id,
                 onTapDelete: () {
+                  final bloc = context.read<AdminSettingListBloc>();
                   showDialog(
                       context: context,
                       builder: (_) => SampleDialogWidget.twoButton(
@@ -64,7 +65,6 @@ class AdminSettingListPage extends StatelessWidget {
                             content: 'Are you sure want to delete?',
                             onButtonPressed: () {
                               Navigator.of(context).pop();
-                              final bloc = context.read<AdminSettingListBloc>();
                               bloc.onTapDeleteSetting(settingList[index].id).then((_) {}).catchError((error) {
                                 Navigator.of(context).pop();
                                 showDialog(

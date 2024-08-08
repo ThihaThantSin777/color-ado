@@ -40,7 +40,7 @@ class AdminBannerListPage extends StatelessWidget {
         ),
         body: Selector<AdminBannerListBloc, List<BannerVO>?>(
           selector: (_, bloc) => bloc.getBannerList,
-          builder: (_, bannerList, __) {
+          builder: (context, bannerList, __) {
             if (bannerList == null) {
               return const SizedBox();
             }
@@ -55,6 +55,7 @@ class AdminBannerListPage extends StatelessWidget {
                 image: bannerList[index].url,
                 id: bannerList[index].id,
                 onTapDelete: () {
+                  final bloc = context.read<AdminBannerListBloc>();
                   showDialog(
                       context: context,
                       builder: (_) => SampleDialogWidget.twoButton(
@@ -62,7 +63,7 @@ class AdminBannerListPage extends StatelessWidget {
                             content: 'Are you sure want to delete?',
                             onButtonPressed: () {
                               Navigator.of(context).pop();
-                              final bloc = context.read<AdminBannerListBloc>();
+
                               bloc.onTapDeleteBanner(bannerList[index].id).then((_) {}).catchError((error) {
                                 Navigator.of(context).pop();
                                 showDialog(

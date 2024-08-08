@@ -44,7 +44,7 @@ class AdminLocalAndInternationalRelationsListPage extends StatelessWidget {
         ),
         body: Selector<AdminLocalAndInternationalRelationsListBloc, List<LocalAndInternationalRelationsVO>?>(
           selector: (_, bloc) => bloc.getLocalAndInternationalRelationList,
-          builder: (_, list, __) {
+          builder: (context, list, __) {
             if (list == null) {
               return const SizedBox();
             }
@@ -61,6 +61,7 @@ class AdminLocalAndInternationalRelationsListPage extends StatelessWidget {
                 description: list[index].description,
                 id: list[index].id,
                 onTapDelete: () {
+                  final bloc = context.read<AdminLocalAndInternationalRelationsListBloc>();
                   showDialog(
                       context: context,
                       builder: (_) => SampleDialogWidget.twoButton(
@@ -68,7 +69,6 @@ class AdminLocalAndInternationalRelationsListPage extends StatelessWidget {
                             content: 'Are you sure want to delete?',
                             onButtonPressed: () {
                               Navigator.of(context).pop();
-                              final bloc = context.read<AdminLocalAndInternationalRelationsListBloc>();
                               bloc.onTapDeleteLocalAndInternationalRelations(list[index].id).then((_) {}).catchError((error) {
                                 Navigator.of(context).pop();
                                 showDialog(
@@ -105,6 +105,8 @@ class AdminLocalAndInternationalRelationsListPage extends StatelessWidget {
                         isEnableImage: true,
                         isEnableDescription: true,
                         isEnableTitle: true,
+                        isEnableUploadPDF: true,
+                        isEnablePDFName: true,
                       ),
                     ),
                   );

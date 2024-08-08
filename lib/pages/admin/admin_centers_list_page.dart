@@ -27,6 +27,8 @@ class AdminCentersListPage extends StatelessWidget {
                   isEnableImage: true,
                   isEnableDescription: true,
                   isEnableTitle: true,
+                  isEnablePDFName: true,
+                  isEnableUploadPDF: true,
                 ),
               ),
             );
@@ -42,7 +44,7 @@ class AdminCentersListPage extends StatelessWidget {
         ),
         body: Selector<AdminCentersListBloc, List<CentersVO>?>(
           selector: (_, bloc) => bloc.getCentersList,
-          builder: (_, centersList, __) {
+          builder: (context, centersList, __) {
             if (centersList == null) {
               return const SizedBox();
             }
@@ -59,6 +61,7 @@ class AdminCentersListPage extends StatelessWidget {
                 description: centersList[index].description,
                 id: centersList[index].id,
                 onTapDelete: () {
+                  final bloc = context.read<AdminCentersListBloc>();
                   showDialog(
                       context: context,
                       builder: (_) => SampleDialogWidget.twoButton(
@@ -66,7 +69,7 @@ class AdminCentersListPage extends StatelessWidget {
                             content: 'Are you sure want to delete?',
                             onButtonPressed: () {
                               Navigator.of(context).pop();
-                              final bloc = context.read<AdminCentersListBloc>();
+
                               bloc.onTapDeleteCenters(centersList[index].id).then((_) {}).catchError((error) {
                                 Navigator.of(context).pop();
                                 showDialog(
@@ -101,6 +104,8 @@ class AdminCentersListPage extends StatelessWidget {
                         isEnableImage: true,
                         isEnableDescription: true,
                         isEnableTitle: true,
+                        isEnablePDFName: true,
+                        isEnableUploadPDF: true,
                       ),
                     ),
                   );

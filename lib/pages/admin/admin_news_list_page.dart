@@ -26,6 +26,7 @@ class AdminNewsListPage extends StatelessWidget {
                   path: kNewsPath,
                   isEnableDescription: true,
                   isEnableTitle: true,
+                  isEnableImage: true,
                 ),
               ),
             );
@@ -41,7 +42,7 @@ class AdminNewsListPage extends StatelessWidget {
         ),
         body: Selector<AdminNewsListBloc, List<NewsVO>?>(
           selector: (_, bloc) => bloc.getNewsList,
-          builder: (_, newsList, __) {
+          builder: (context, newsList, __) {
             if (newsList == null) {
               return const SizedBox();
             }
@@ -55,8 +56,10 @@ class AdminNewsListPage extends StatelessWidget {
               itemBuilder: (_, index) => VerticalListWidget(
                 title: newsList[index].title,
                 description: newsList[index].description,
+                image: newsList[index].image,
                 id: newsList[index].id,
                 onTapDelete: () {
+                  final bloc = context.read<AdminNewsListBloc>();
                   showDialog(
                       context: context,
                       builder: (_) => SampleDialogWidget.twoButton(
@@ -64,7 +67,6 @@ class AdminNewsListPage extends StatelessWidget {
                             content: 'Are you sure want to delete?',
                             onButtonPressed: () {
                               Navigator.of(context).pop();
-                              final bloc = context.read<AdminNewsListBloc>();
                               bloc.onTapDeleteNews(newsList[index].id).then((_) {}).catchError((error) {
                                 Navigator.of(context).pop();
                                 showDialog(
@@ -95,8 +97,10 @@ class AdminNewsListPage extends StatelessWidget {
                         id: newsList[index].id,
                         preDescription: newsList[index].description,
                         preTitle: newsList[index].title,
+                        preImageURL: newsList[index].image,
                         isEnableDescription: true,
                         isEnableTitle: true,
+                        isEnableImage: true,
                       ),
                     ),
                   );

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_ado/resources/dimens.dart';
 import 'package:flutter/material.dart';
 
@@ -6,10 +7,12 @@ class NewsDetailsPage extends StatelessWidget {
     super.key,
     required this.description,
     required this.title,
+    required this.image,
   });
 
   final String title;
   final String description;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,14 @@ class NewsDetailsPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                CachedNetworkImage(
+                  imageUrl: image,
+                  fit: BoxFit.cover,
+                  height: kDetailsPageImageHeight,
+                ),
+                const SizedBox(
+                  height: kSP10x,
+                ),
                 Text(
                   title,
                   textAlign: TextAlign.center,

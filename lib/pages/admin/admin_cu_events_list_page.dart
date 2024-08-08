@@ -41,7 +41,7 @@ class AdminCUEventsListPage extends StatelessWidget {
         ),
         body: Selector<AdminCUEventsListBloc, List<CUEventsVO>?>(
           selector: (_, bloc) => bloc.getCUEventList,
-          builder: (_, cuEventsList, __) {
+          builder: (context, cuEventsList, __) {
             if (cuEventsList == null) {
               return const SizedBox();
             }
@@ -57,6 +57,7 @@ class AdminCUEventsListPage extends StatelessWidget {
                 description: cuEventsList[index].description,
                 id: cuEventsList[index].id,
                 onTapDelete: () {
+                  final bloc = context.read<AdminCUEventsListBloc>();
                   showDialog(
                       context: context,
                       builder: (_) => SampleDialogWidget.twoButton(
@@ -64,7 +65,6 @@ class AdminCUEventsListPage extends StatelessWidget {
                             content: 'Are you sure want to delete?',
                             onButtonPressed: () {
                               Navigator.of(context).pop();
-                              final bloc = context.read<AdminCUEventsListBloc>();
                               bloc.onTapDeleteCUEvents(cuEventsList[index].id).then((_) {}).catchError((error) {
                                 Navigator.of(context).pop();
                                 showDialog(
