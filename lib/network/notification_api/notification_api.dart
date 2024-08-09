@@ -33,7 +33,7 @@ class NotificationAPI {
           data: jsonEncode(message),
         );
       } catch (error) {
-        rethrow;
+        continue;
       }
     }
 
