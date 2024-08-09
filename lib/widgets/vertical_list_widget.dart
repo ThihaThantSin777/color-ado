@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:color_ado/resources/dimens.dart';
+import 'package:color_ado/widgets/shimmer_loading_widget.dart';
 import 'package:flutter/material.dart';
 
 class VerticalListWidget extends StatelessWidget {
@@ -40,6 +41,10 @@ class VerticalListWidget extends StatelessWidget {
                     child: CachedNetworkImage(
                       imageUrl: image ?? '',
                       fit: BoxFit.cover,
+                      placeholder: (_, __) => const ShimmerLoadingWidget(
+                        height: 200,
+                        width: double.infinity,
+                      ),
                     ),
                   ),
                 ),
