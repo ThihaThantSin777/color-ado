@@ -1,5 +1,6 @@
 import 'package:color_ado/bloc/base_bloc.dart';
 import 'package:color_ado/data/model/color_ado_model.dart';
+import 'package:color_ado/database/share_preferences_dao.dart';
 import 'package:color_ado/utils/enums.dart';
 
 class IndexBloc extends BaseBloc {
@@ -26,14 +27,16 @@ class IndexBloc extends BaseBloc {
     });
 
     Future.delayed(const Duration(seconds: 4), () {
-      _colorAdoModel.getCuEventsNotificationCountReactiveByUserID().listen((data) {
-        _cuEventsNotificationCount = data;
-        notifyListeners();
-      });
+      SharePreferencesDAO.getUserID().then((id) {
+        _colorAdoModel.getCuEventsNotificationCountReactiveByUserID(id ?? 0).listen((data) {
+          _cuEventsNotificationCount = data;
+          notifyListeners();
+        });
 
-      _colorAdoModel.getNewsNotificationCountReactiveByUserID().listen((data) {
-        _newsNotificationCount = data;
-        notifyListeners();
+        _colorAdoModel.getNewsNotificationCountReactiveByUserID(id ?? 0).listen((data) {
+          _newsNotificationCount = data;
+          notifyListeners();
+        });
       });
     });
   }

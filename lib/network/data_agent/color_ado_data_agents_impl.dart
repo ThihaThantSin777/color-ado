@@ -135,7 +135,9 @@ class ColorAdoDataAgentImpl extends ColorAdoDataAgent {
   }
 
   @override
-  Future login(String email, String password) => auth.signInWithEmailAndPassword(email: email, password: password);
+  Future login(String email, String password) {
+    return auth.signInWithEmailAndPassword(email: email, password: password);
+  }
 
   @override
   Future setCUEventsNotificationCount(int count, {int? uID, String? fcmToken}) async {
@@ -143,6 +145,7 @@ class ColorAdoDataAgentImpl extends ColorAdoDataAgent {
     final id = uID ?? (await SharePreferencesDAO.getUserID() ?? 0);
     final newsNotificationCount = await getNewsNotificationCountByUserID();
     UserVO userVO = UserVO(id, token, count, newsNotificationCount, DateTime.now().toString());
+
     return databaseRef.child(kUserPath).child(id.toString()).set(userVO.toJson());
   }
 
@@ -260,26 +263,23 @@ class ColorAdoDataAgentImpl extends ColorAdoDataAgent {
   }
 
   @override
-  Stream<int> getCuEventsNotificationCountReactiveByUserID() async* {
-    final id = await SharePreferencesDAO.getUserID();
+  Stream<int> getCuEventsNotificationCountReactiveByUserID(int id) {
     final userRef = databaseRef.child(kUserPath).child(id.toString());
-
-    yield* userRef.onValue.map((event) {
+    return databaseRef.child(kUserPath).child(id.toString()).onValue.map((event) {
       final rawData = event.snapshot.value as Map<Object?, Object?>;
       final convertedMap = rawData.map((key, value) {
         return MapEntry(key.toString(), value);
       });
       final user = UserVO.fromJson(Map<String, dynamic>.from(convertedMap));
+      print("CU: ${user.cuEventNotificationCount}");
       return user.cuEventNotificationCount;
     });
   }
 
   @override
-  Stream<int> getNewsNotificationCountReactiveByUserID() async* {
-    final id = await SharePreferencesDAO.getUserID();
+  Stream<int> getNewsNotificationCountReactiveByUserID(int id) {
     final userRef = databaseRef.child(kUserPath).child(id.toString());
-
-    yield* userRef.onValue.map((event) {
+    return databaseRef.child(kUserPath).child(id.toString()).onValue.map((event) {
       final rawData = event.snapshot.value as Map<Object?, Object?>;
       final convertedMap = rawData.map((key, value) {
         return MapEntry(key.toString(), value);

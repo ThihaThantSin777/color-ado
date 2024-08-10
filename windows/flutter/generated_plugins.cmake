@@ -7,6 +7,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   firebase_auth
   firebase_core
   firebase_storage
+  flutter_app_icon_badge
   url_launcher_windows
 )
 

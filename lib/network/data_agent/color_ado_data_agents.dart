@@ -50,9 +50,9 @@ abstract class ColorAdoDataAgent {
 
   Future<int> getNewsNotificationCountByUserID();
 
-  Stream<int> getCuEventsNotificationCountReactiveByUserID();
+  Stream<int> getCuEventsNotificationCountReactiveByUserID(int id);
 
-  Stream<int> getNewsNotificationCountReactiveByUserID();
+  Stream<int> getNewsNotificationCountReactiveByUserID(int id);
 
   Future<List<String>> getTokenList();
 

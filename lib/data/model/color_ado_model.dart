@@ -80,9 +80,9 @@ class ColorAdoModel {
 
   Future<int> getNewsNotificationCountByUserID() => _adoDataAgent.getNewsNotificationCountByUserID();
 
-  Stream<int> getCuEventsNotificationCountReactiveByUserID() => _adoDataAgent.getCuEventsNotificationCountReactiveByUserID();
+  Stream<int> getCuEventsNotificationCountReactiveByUserID(int id) => _adoDataAgent.getCuEventsNotificationCountReactiveByUserID(id);
 
-  Stream<int> getNewsNotificationCountReactiveByUserID() => _adoDataAgent.getNewsNotificationCountReactiveByUserID();
+  Stream<int> getNewsNotificationCountReactiveByUserID(int id) => _adoDataAgent.getNewsNotificationCountReactiveByUserID(id);
 
   Future setCUEventsNotificationCount(int count, {int? uID, String? fcmToken}) => _adoDataAgent.setCUEventsNotificationCount(
         count,

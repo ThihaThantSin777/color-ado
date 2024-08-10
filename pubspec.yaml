@@ -45,7 +45,7 @@ dependencies:
   googleapis: ^13.2.0
   googleapis_auth: ^1.6.0
   shared_preferences: ^2.3.1
-  flutter_dynamic_icon: ^2.1.0
+  flutter_app_icon_badge: ^2.0.0
   dio: ^5.5.0+1
   flutter:
     sdk: flutter

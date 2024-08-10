@@ -18,6 +18,6 @@ class UserVO {
 
   @override
   String toString() {
-    return 'UserVO{id: $id, fcmToken: $fcmToken, cuEventNotificationCount: $cuEventNotificationCount, newsNotificationCount: $newsNotificationCount, timeStamp: $timeStamp}';
+    return 'UserVO{id: $id, cuEventNotificationCount: $cuEventNotificationCount, newsNotificationCount: $newsNotificationCount, timeStamp: $timeStamp}';
   }
 }

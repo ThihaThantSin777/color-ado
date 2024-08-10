@@ -40,7 +40,6 @@ class NotificationAPI {
         );
         callBackAfterNotification();
       } catch (error) {
-        print("Error:$error");
         continue;
       }
     }
