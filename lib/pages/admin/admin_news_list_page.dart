@@ -57,7 +57,6 @@ class AdminNewsListPage extends StatelessWidget {
                 title: newsList[index].title,
                 description: newsList[index].description,
                 image: newsList[index].image,
-                id: newsList[index].id,
                 onTapDelete: () {
                   final bloc = context.read<AdminNewsListBloc>();
                   showDialog(

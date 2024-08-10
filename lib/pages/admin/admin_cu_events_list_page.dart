@@ -55,7 +55,6 @@ class AdminCUEventsListPage extends StatelessWidget {
               itemBuilder: (_, index) => VerticalListWidget(
                 title: cuEventsList[index].title,
                 description: cuEventsList[index].description,
-                id: cuEventsList[index].id,
                 onTapDelete: () {
                   final bloc = context.read<AdminCUEventsListBloc>();
                   showDialog(

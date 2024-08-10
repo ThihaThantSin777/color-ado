@@ -9,17 +9,15 @@ class VerticalListWidget extends StatelessWidget {
     this.image,
     this.title,
     this.description,
-    required this.id,
-    required this.onTapDelete,
-    required this.onTapEdit,
+    this.onTapDelete,
+    this.onTapEdit,
   });
 
   final String? image;
   final String? title;
   final String? description;
-  final int id;
-  final Function onTapEdit;
-  final Function onTapDelete;
+  final Function? onTapEdit;
+  final Function? onTapDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -79,27 +77,31 @@ class VerticalListWidget extends StatelessWidget {
               ],
               Row(
                 children: [
-                  Expanded(
-                      child: MaterialButton(
-                    color: Colors.green,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      onTapEdit();
-                    },
-                    child: const Text('Edit'),
-                  )),
+                  if (onTapEdit != null) ...[
+                    Expanded(
+                        child: MaterialButton(
+                      color: Colors.green,
+                      textColor: Colors.white,
+                      onPressed: () {
+                        onTapEdit!();
+                      },
+                      child: const Text('Edit'),
+                    )),
+                  ],
                   const SizedBox(
                     width: 10,
                   ),
-                  Expanded(
-                      child: MaterialButton(
-                    color: Colors.red,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      onTapDelete();
-                    },
-                    child: const Text('Delete'),
-                  )),
+                  if (onTapDelete != null) ...[
+                    Expanded(
+                        child: MaterialButton(
+                      color: Colors.red,
+                      textColor: Colors.white,
+                      onPressed: () {
+                        onTapDelete!();
+                      },
+                      child: const Text('Delete'),
+                    )),
+                  ],
                 ],
               ),
             ],

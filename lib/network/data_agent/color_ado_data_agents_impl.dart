@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:color_ado/data/vos/admin/admin_vo.dart';
 import 'package:color_ado/data/vos/banner_vo/banner_vo.dart';
 import 'package:color_ado/data/vos/centers_vo/centers_vo.dart';
 import 'package:color_ado/data/vos/cu_events_vo/cu_events_vo.dart';
@@ -11,6 +12,7 @@ import 'package:color_ado/data/vos/user_vo/user_vo.dart';
 import 'package:color_ado/database/share_preferences_dao.dart';
 import 'package:color_ado/network/data_agent/color_ado_data_agents.dart';
 import 'package:color_ado/resources/strings.dart';
+import 'package:color_ado/service/fcm_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -80,17 +82,17 @@ class ColorAdoDataAgentImpl extends ColorAdoDataAgent {
   }
 
   @override
-  Future createUser(UserVO user) async {
-    await auth.createUserWithEmailAndPassword(email: user.email, password: user.password);
-    return databaseRef.child(kUserPath).child(user.id.toString()).set(user.toJson());
+  Future createAdmin(AdminVO user, String password) async {
+    await auth.createUserWithEmailAndPassword(email: user.email, password: password);
+    return databaseRef.child(kAdminPath).child(user.id.toString()).set(user.toJson());
   }
 
   @override
   Future logout() => auth.signOut();
 
   @override
-  Future<List<UserVO>> getRegisterUserList() async {
-    final rawData = await databaseRef.child(kUserPath).get();
+  Future<List<AdminVO>> getRegisterAdminList() async {
+    final rawData = await databaseRef.child(kAdminPath).get();
     final rawMap = rawData.value as Map<Object?, Object?>;
 
     return rawMap.values.toList().map((element) {
@@ -99,7 +101,7 @@ class ColorAdoDataAgentImpl extends ColorAdoDataAgent {
       Map<String, dynamic> convertedMap = originalData.map((key, value) {
         return MapEntry(key.toString(), value);
       });
-      return UserVO.fromJson(convertedMap);
+      return AdminVO.fromJson(convertedMap);
     }).toList();
   }
 
@@ -136,21 +138,169 @@ class ColorAdoDataAgentImpl extends ColorAdoDataAgent {
   Future login(String email, String password) => auth.signInWithEmailAndPassword(email: email, password: password);
 
   @override
-  Future createToken(String token) async {
+  Future setCUEventsNotificationCount(int count, {int? uID, String? fcmToken}) async {
+    final token = fcmToken ?? FcmService.fcmToken;
+    final id = uID ?? (await SharePreferencesDAO.getUserID() ?? 0);
+    final newsNotificationCount = await getNewsNotificationCountByUserID();
+    UserVO userVO = UserVO(id, token, count, newsNotificationCount, DateTime.now().toString());
+    return databaseRef.child(kUserPath).child(id.toString()).set(userVO.toJson());
+  }
+
+  @override
+  Future setNewsNotificationCount(int count, {int? uID, String? fcmToken}) async {
+    final token = fcmToken ?? FcmService.fcmToken;
+    final id = uID ?? (await SharePreferencesDAO.getUserID() ?? 0);
+    final cuEventsNotificationCount = await getCUEventsNotificationCountByUserID();
+    UserVO userVO = UserVO(id, token, cuEventsNotificationCount, count, DateTime.now().toString());
+    return databaseRef.child(kUserPath).child(id.toString()).set(userVO.toJson());
+  }
+
+  @override
+  Future createGuestUser() async {
+    final fcmToken = FcmService.fcmToken;
     final uID = await SharePreferencesDAO.getUserID();
     if (uID != null) {
-      return databaseRef.child(kTokenPath).child(uID.toString()).set({kTokenPath: token});
+      final cuEventsNotificationCount = await getCUEventsNotificationCountByUserID();
+      final newsNotificationCount = await getNewsNotificationCountByUserID();
+      UserVO userVO = UserVO(uID, fcmToken, cuEventsNotificationCount, newsNotificationCount, DateTime.now().toString());
+      return databaseRef.child(kUserPath).child(uID.toString()).set(userVO.toJson());
     }
     final id = DateTime.now().microsecondsSinceEpoch;
     await SharePreferencesDAO.saveUserID(id);
-    return databaseRef.child(kTokenPath).child(id.toString()).set({kTokenPath: token});
+    UserVO userVO = UserVO(id, fcmToken, 0, 0, DateTime.now().toString());
+    return databaseRef.child(kUserPath).child(id.toString()).set(userVO.toJson());
   }
 
   @override
   Future<List<String>> getTokenList() async {
-    final rawData = await databaseRef.child(kTokenPath).get();
+    final rawData = await databaseRef.child(kUserPath).get();
     final rawMap = rawData.value as Map<Object?, Object?>;
-    List tokens = rawMap.values.map((e) => (e as Map)['token']).toList();
-    return tokens.map((element) => element.toString()).toList();
+
+    final userDataList = rawMap.values.toList().map((element) {
+      Map<Object?, Object?> originalData = element as Map<Object?, Object?>;
+
+      Map<String, dynamic> convertedMap = originalData.map((key, value) {
+        return MapEntry(key.toString(), value);
+      });
+      return UserVO.fromJson(convertedMap);
+    }).toList();
+    return userDataList.map((element) => element.fcmToken).toList();
+  }
+
+  @override
+  Future<int> getCUEventsNotificationCountByUserID() async {
+    final id = await SharePreferencesDAO.getUserID();
+    final rawData = await databaseRef.child(kUserPath).child(id.toString()).get();
+    final rawMap = rawData.value as Map<Object?, Object?>;
+
+    Map<String, dynamic> convertedMap = rawMap.map((key, value) {
+      return MapEntry(key.toString(), value);
+    });
+    return UserVO.fromJson(convertedMap).cuEventNotificationCount;
+  }
+
+  @override
+  Future<int> getNewsNotificationCountByUserID() async {
+    final id = await SharePreferencesDAO.getUserID();
+    final rawData = await databaseRef.child(kUserPath).child(id.toString()).get();
+    final rawMap = rawData.value as Map<Object?, Object?>;
+
+    Map<String, dynamic> convertedMap = rawMap.map((key, value) {
+      return MapEntry(key.toString(), value);
+    });
+    return UserVO.fromJson(convertedMap).newsNotificationCount;
+  }
+
+  @override
+  Future deleteExpireFCMTokenUser() async {
+    final rawData = await databaseRef.child(kUserPath).get();
+    final rawMap = rawData.value as Map<Object?, Object?>;
+
+    final userDataList = rawMap.values.toList().map((element) {
+      Map<Object?, Object?> originalData = element as Map<Object?, Object?>;
+
+      Map<String, dynamic> convertedMap = originalData.map((key, value) {
+        return MapEntry(key.toString(), value);
+      });
+      return UserVO.fromJson(convertedMap);
+    }).toList();
+
+    final needToDeleteUserList = userDataList
+        .where((element) {
+          final timeStamp = DateTime.parse(element.timeStamp);
+          return _isWithinSixMonths(timeStamp);
+        })
+        .map((element) => element)
+        .toList();
+
+    if (needToDeleteUserList.isNotEmpty) {
+      for (var data in needToDeleteUserList) {
+        await databaseRef.child(data.id.toString()).remove();
+      }
+    }
+
+    return Future.value();
+  }
+
+  bool _isWithinSixMonths(DateTime date) {
+    DateTime currentDate = DateTime.now();
+    DateTime sixMonthsAgo = DateTime(
+      currentDate.year,
+      currentDate.month - 6,
+      currentDate.day,
+    );
+
+    DateTime sixMonthsAhead = DateTime(
+      currentDate.year,
+      currentDate.month + 6,
+      currentDate.day,
+    );
+
+    return !(date.isAfter(sixMonthsAgo) && date.isBefore(sixMonthsAhead));
+  }
+
+  @override
+  Stream<int> getCuEventsNotificationCountReactiveByUserID() async* {
+    final id = await SharePreferencesDAO.getUserID();
+    final userRef = databaseRef.child(kUserPath).child(id.toString());
+
+    yield* userRef.onValue.map((event) {
+      final rawData = event.snapshot.value as Map<Object?, Object?>;
+      final convertedMap = rawData.map((key, value) {
+        return MapEntry(key.toString(), value);
+      });
+      final user = UserVO.fromJson(Map<String, dynamic>.from(convertedMap));
+      return user.cuEventNotificationCount;
+    });
+  }
+
+  @override
+  Stream<int> getNewsNotificationCountReactiveByUserID() async* {
+    final id = await SharePreferencesDAO.getUserID();
+    final userRef = databaseRef.child(kUserPath).child(id.toString());
+
+    yield* userRef.onValue.map((event) {
+      final rawData = event.snapshot.value as Map<Object?, Object?>;
+      final convertedMap = rawData.map((key, value) {
+        return MapEntry(key.toString(), value);
+      });
+      final user = UserVO.fromJson(Map<String, dynamic>.from(convertedMap));
+      return user.newsNotificationCount;
+    });
+  }
+
+  @override
+  Future<List<UserVO>> getGuestUserList() async {
+    final rawData = await databaseRef.child(kUserPath).get();
+    final rawMap = rawData.value as Map<Object?, Object?>;
+
+    return rawMap.values.toList().map((element) {
+      Map<Object?, Object?> originalData = element as Map<Object?, Object?>;
+
+      Map<String, dynamic> convertedMap = originalData.map((key, value) {
+        return MapEntry(key.toString(), value);
+      });
+      return UserVO.fromJson(convertedMap);
+    }).toList();
   }
 }

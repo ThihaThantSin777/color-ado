@@ -7,15 +7,17 @@ part of 'user_vo.dart';
 // **************************************************************************
 
 UserVO _$UserVOFromJson(Map<String, dynamic> json) => UserVO(
-      (json['id'] as num).toInt(),
-      json['user_name'] as String,
-      json['email'] as String,
-      json['password'] as String,
+      json['id'] as int,
+      json['fcmToken'] as String,
+      (json['cuEventNotificationCount'] as num).toInt(),
+      (json['newsNotificationCount'] as num).toInt(),
+      json['timeStamp'] as String,
     );
 
 Map<String, dynamic> _$UserVOToJson(UserVO instance) => <String, dynamic>{
       'id': instance.id,
-      'user_name': instance.userName,
-      'email': instance.email,
-      'password': instance.password,
+      'fcmToken': instance.fcmToken,
+      'cuEventNotificationCount': instance.cuEventNotificationCount,
+      'newsNotificationCount': instance.newsNotificationCount,
+      'timeStamp': instance.timeStamp,
     };

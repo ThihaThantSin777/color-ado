@@ -3,9 +3,9 @@ import 'package:color_ado/data/vos/cu_events_vo/cu_events_vo.dart';
 import 'package:color_ado/pages/users/cu_events_details_page.dart';
 import 'package:color_ado/resources/dimens.dart';
 import 'package:color_ado/utils/string_extensions.dart';
-import 'package:color_ado/widgets/blue_card_container_widget.dart';
 import 'package:color_ado/widgets/custom_date_picker_widget.dart';
 import 'package:color_ado/widgets/data_empty_widget.dart';
+import 'package:color_ado/widgets/vertical_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -112,10 +112,9 @@ class CUEventsPage extends StatelessWidget {
                               ),
                             );
                           },
-                          child: BlueCardContainerWidget(
+                          child: VerticalListWidget(
                             title: newData.title,
                             description: newData.description,
-                            createdAt: newData.createdAt,
                           ),
                         );
                       },

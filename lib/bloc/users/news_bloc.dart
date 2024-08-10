@@ -14,7 +14,7 @@ class NewsBloc extends BaseBloc {
       if (news.isEmpty) {
         _news = [];
       } else {
-        _news = news;
+        _news = news.reversed.toList();
       }
       notifyListeners();
     });

@@ -59,7 +59,6 @@ class AdminCentersListPage extends StatelessWidget {
                 image: centersList[index].url,
                 title: centersList[index].title,
                 description: centersList[index].description,
-                id: centersList[index].id,
                 onTapDelete: () {
                   final bloc = context.read<AdminCentersListBloc>();
                   showDialog(

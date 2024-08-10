@@ -15,7 +15,8 @@ FacilitiesVO _$FacilitiesVOFromJson(Map<String, dynamic> json) => FacilitiesVO(
       pdfURL: json['pdfURL'] as String?,
     );
 
-Map<String, dynamic> _$FacilitiesVOToJson(FacilitiesVO instance) => <String, dynamic>{
+Map<String, dynamic> _$FacilitiesVOToJson(FacilitiesVO instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,

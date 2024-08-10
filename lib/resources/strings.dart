@@ -13,13 +13,13 @@ const kLocalAndInternationalRelationShipsText = 'Local and International Relatio
 const kViewAllText = 'View all';
 
 /// Data Path
-const kSettingPath = 'settings';
+const kSettingPath = 'setting';
 const kBannerPath = 'banner';
 const kFacilitiesPath = 'facilities';
 const kCentersPath = 'centers';
 const kLocalAndInternationalRelationsPath = 'local_and_international_relations';
 const kNewsPath = 'news';
 const kCUEventsPath = 'cu_events';
-const kUserPath = 'user';
+const kAdminPath = 'admin';
 const kPDFPath = 'pdf';
-const kTokenPath = 'token';
+const kUserPath = 'user';

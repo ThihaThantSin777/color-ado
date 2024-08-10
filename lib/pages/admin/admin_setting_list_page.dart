@@ -55,7 +55,6 @@ class AdminSettingListPage extends StatelessWidget {
               itemBuilder: (_, index) => VerticalListWidget(
                 title: settingList[index].title,
                 description: settingList[index].description,
-                id: settingList[index].id,
                 onTapDelete: () {
                   final bloc = context.read<AdminSettingListBloc>();
                   showDialog(
@@ -65,7 +64,7 @@ class AdminSettingListPage extends StatelessWidget {
                             content: 'Are you sure want to delete?',
                             onButtonPressed: () {
                               Navigator.of(context).pop();
-                              bloc.onTapDeleteSetting(settingList[index].id).then((_) {}).catchError((error) {
+                              bloc.onTapDeleteSetting(int.parse(settingList[index].id)).then((_) {}).catchError((error) {
                                 Navigator.of(context).pop();
                                 showDialog(
                                     context: context,
@@ -96,7 +95,7 @@ class AdminSettingListPage extends StatelessWidget {
                         preTitle: settingList[index].title,
                         preDescription: settingList[index].description,
                         path: kSettingPath,
-                        id: settingList[index].id,
+                        id: int.parse(settingList[index].id),
                       ),
                     ),
                   );

@@ -2,9 +2,9 @@ import 'package:color_ado/bloc/users/news_bloc.dart';
 import 'package:color_ado/data/vos/news_vo/news_vo.dart';
 import 'package:color_ado/pages/users/news_details_page.dart';
 import 'package:color_ado/resources/dimens.dart';
-import 'package:color_ado/widgets/blue_card_container_widget.dart';
 import 'package:color_ado/widgets/data_empty_widget.dart';
 import 'package:color_ado/widgets/shimmer_loading_widget.dart';
+import 'package:color_ado/widgets/vertical_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -47,10 +47,10 @@ class NewsPage extends StatelessWidget {
                           ),
                         );
                       },
-                      child: BlueCardContainerWidget(
+                      child: VerticalListWidget(
                         title: newData.title,
                         description: newData.description,
-                        createdAt: newData.createdAt,
+                        image: newData.image,
                       ),
                     );
                   },

@@ -7,7 +7,7 @@ part of 'setting_vo.dart';
 // **************************************************************************
 
 SettingVO _$SettingVOFromJson(Map<String, dynamic> json) => SettingVO(
-      (json['id'] as num).toInt(),
+      json['id'] as String,
       json['title'] as String,
       json['description'] as String,
     );

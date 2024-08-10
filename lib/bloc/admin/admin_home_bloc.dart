@@ -10,12 +10,14 @@ class AdminHomeBloc extends BaseBloc {
 
   AdminHomeBloc({required String email}) {
     setLoadingState();
-    _colorAdoModel.getRegisterUserNameByEmail(email).then((value) {
+    _colorAdoModel.getRegisterAdminNameByEmail(email).then((value) {
       _userName = value;
       setSuccessState();
     }).catchError((error) {
       setErrorState(error.toString());
     });
+
+    _colorAdoModel.deleteExpireFCMTokenUser();
   }
 
   Future onTapLogout() {

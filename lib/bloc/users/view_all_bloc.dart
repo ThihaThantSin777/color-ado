@@ -33,7 +33,7 @@ class ViewAllBloc extends BaseBloc {
         if (facilitiesList.isEmpty) {
           _facilitiesList = [];
         } else {
-          _facilitiesList = facilitiesList;
+          _facilitiesList = facilitiesList.reversed.toList();
         }
         notifyListeners();
       });
@@ -44,7 +44,7 @@ class ViewAllBloc extends BaseBloc {
         if (centersList.isEmpty) {
           _centersList = [];
         } else {
-          _centersList = centersList;
+          _centersList = centersList.reversed.toList();
         }
         notifyListeners();
       });
@@ -55,7 +55,7 @@ class ViewAllBloc extends BaseBloc {
         if (localAndInternationalRelationsList.isEmpty) {
           _localAndInternationalRelationsList = [];
         } else {
-          _localAndInternationalRelationsList = localAndInternationalRelationsList;
+          _localAndInternationalRelationsList = localAndInternationalRelationsList.reversed.toList();
         }
         notifyListeners();
       });

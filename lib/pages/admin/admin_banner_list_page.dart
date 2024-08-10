@@ -53,7 +53,6 @@ class AdminBannerListPage extends StatelessWidget {
               itemCount: bannerList.length,
               itemBuilder: (_, index) => VerticalListWidget(
                 image: bannerList[index].url,
-                id: bannerList[index].id,
                 onTapDelete: () {
                   final bloc = context.read<AdminBannerListBloc>();
                   showDialog(

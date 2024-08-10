@@ -181,8 +181,26 @@ class CreateEditBloc extends BaseBloc {
       return _colorAdoModel.addEditData(cuEventsVO.id, kCUEventsPath, cuEventsVO.toJson()).then((_) async {
         final tokens = await _colorAdoModel.getTokenList();
         tokens.removeWhere((element) => element == FcmService.fcmToken);
-        final payload = '$_title|$_description';
-        NotificationAPI.sendFCMMessage(_title ?? '', 'Please check new events', payload, tokens);
+        final payload = '$kCUEventsPath|$_title|$_description';
+        NotificationAPI.sendFCMMessage(
+          _title ?? '',
+          'Please check new events',
+          payload,
+          tokens,
+          () async {
+            final guestUserList = await _colorAdoModel.getGuestUserList();
+            guestUserList.removeWhere((element) => element.fcmToken == FcmService.fcmToken);
+            for (var element in guestUserList) {
+              int previousNotificationCount = element.cuEventNotificationCount;
+              String fcmToken = element.fcmToken;
+              _colorAdoModel.setCUEventsNotificationCount(
+                ++previousNotificationCount,
+                uID: element.id,
+                fcmToken: fcmToken,
+              );
+            }
+          },
+        );
       });
     }
 
@@ -212,12 +230,35 @@ class CreateEditBloc extends BaseBloc {
 
     if (_path == kNewsPath) {
       NewsVO newsVO = NewsVO(id, _title ?? '', _description ?? '', DateTime.now().toString(), _userSelectImage ?? '');
-      return _colorAdoModel.addEditData(newsVO.id, kNewsPath, newsVO.toJson());
+      return _colorAdoModel.addEditData(newsVO.id, kNewsPath, newsVO.toJson()).then((_) async {
+        final tokens = await _colorAdoModel.getTokenList();
+        tokens.removeWhere((element) => element == FcmService.fcmToken);
+        final payload = '$kNewsPath|$_title|$_description';
+        NotificationAPI.sendFCMMessage(
+          _title ?? '',
+          'Please check new events',
+          payload,
+          tokens,
+          () async {
+            final guestUserList = await _colorAdoModel.getGuestUserList();
+            guestUserList.removeWhere((element) => element.fcmToken == FcmService.fcmToken);
+            for (var element in guestUserList) {
+              int previousNotificationCount = element.newsNotificationCount;
+              String fcmToken = element.fcmToken;
+              _colorAdoModel.setNewsNotificationCount(
+                ++previousNotificationCount,
+                uID: element.id,
+                fcmToken: fcmToken,
+              );
+            }
+          },
+        );
+      });
     }
 
     if (_path == kSettingPath) {
-      SettingVO settingVO = SettingVO(id, _title ?? '', _description ?? '');
-      return _colorAdoModel.addEditData(settingVO.id, kSettingPath, settingVO.toJson());
+      SettingVO settingVO = SettingVO(id.toString(), _title ?? '', _description ?? '');
+      return _colorAdoModel.addEditData(int.parse(settingVO.id), kSettingPath, settingVO.toJson());
     }
 
     return Future.value();

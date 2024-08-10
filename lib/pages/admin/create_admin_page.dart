@@ -1,4 +1,4 @@
-import 'package:color_ado/bloc/admin/create_user_bloc.dart';
+import 'package:color_ado/bloc/admin/create_admin_bloc.dart';
 import 'package:color_ado/pages/admin/admin_home_page.dart';
 import 'package:color_ado/utils/image_utils.dart';
 import 'package:color_ado/widgets/loadin_dialog_widget.dart';
@@ -6,14 +6,14 @@ import 'package:color_ado/widgets/sample_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CreateUserPage extends StatefulWidget {
-  const CreateUserPage({super.key});
+class CreateAdminPage extends StatefulWidget {
+  const CreateAdminPage({super.key});
 
   @override
-  State<CreateUserPage> createState() => _CreateUserPageState();
+  State<CreateAdminPage> createState() => _CreateAdminPageState();
 }
 
-class _CreateUserPageState extends State<CreateUserPage> {
+class _CreateAdminPageState extends State<CreateAdminPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -31,8 +31,8 @@ class _CreateUserPageState extends State<CreateUserPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<CreateUserBloc>(
-      create: (_) => CreateUserBloc(),
+    return ChangeNotifierProvider<CreateAdminBloc>(
+      create: (_) => CreateAdminBloc(),
       child: Scaffold(
         body: SafeArea(
           child: Padding(
@@ -116,7 +116,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
                         textColor: Colors.white,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            final bloc = context.read<CreateUserBloc>();
+                            final bloc = context.read<CreateAdminBloc>();
                             String userName = _usernameController.text;
                             String email = _emailController.text;
                             String password = _passwordController.text;

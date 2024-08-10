@@ -29,7 +29,7 @@ class HomeBloc extends BaseBloc {
       if (bannerList.isEmpty) {
         _bannerList = [];
       } else {
-        _bannerList = bannerList.take(4).toList();
+        _bannerList = bannerList.take(4).toList().reversed.toList();
       }
       notifyListeners();
     });
@@ -38,7 +38,7 @@ class HomeBloc extends BaseBloc {
       if (facilitiesList.isEmpty) {
         _facilitiesList = [];
       } else {
-        _facilitiesList = facilitiesList.take(4).toList();
+        _facilitiesList = facilitiesList.take(4).toList().reversed.toList();
       }
       notifyListeners();
     });
@@ -47,7 +47,7 @@ class HomeBloc extends BaseBloc {
       if (centersList.isEmpty) {
         _centersList = [];
       } else {
-        _centersList = centersList.take(4).toList();
+        _centersList = centersList.take(4).toList().reversed.toList();
       }
       notifyListeners();
     });
@@ -56,7 +56,7 @@ class HomeBloc extends BaseBloc {
       if (localAndInternationalRelationsList.isEmpty) {
         _localAndInternationalRelationsList = [];
       } else {
-        _localAndInternationalRelationsList = localAndInternationalRelationsList.take(4).toList();
+        _localAndInternationalRelationsList = localAndInternationalRelationsList.take(4).toList().reversed.toList();
       }
       notifyListeners();
     });

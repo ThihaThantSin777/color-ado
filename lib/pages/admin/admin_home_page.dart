@@ -6,7 +6,7 @@ import 'package:color_ado/pages/admin/admin_facilities_list_page.dart';
 import 'package:color_ado/pages/admin/admin_local_and_international_relations_list_page.dart';
 import 'package:color_ado/pages/admin/admin_news_list_page.dart';
 import 'package:color_ado/pages/admin/admin_setting_list_page.dart';
-import 'package:color_ado/pages/admin/create_user_page.dart';
+import 'package:color_ado/pages/admin/create_admin_page.dart';
 import 'package:color_ado/pages/users/index_page.dart';
 import 'package:color_ado/resources/dimens.dart';
 import 'package:color_ado/utils/enums.dart';
@@ -200,7 +200,7 @@ class _WelcomeUserAndLogoutView extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CreateUserPage()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CreateAdminPage()));
             },
             child: const Icon(
               Icons.person_add,

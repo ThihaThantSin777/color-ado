@@ -4,7 +4,7 @@ part 'setting_vo.g.dart';
 
 @JsonSerializable()
 class SettingVO {
-  final int id;
+  final String id;
   final String title;
   final String description;
 

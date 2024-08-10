@@ -59,7 +59,6 @@ class AdminLocalAndInternationalRelationsListPage extends StatelessWidget {
                 image: list[index].url,
                 title: list[index].title,
                 description: list[index].description,
-                id: list[index].id,
                 onTapDelete: () {
                   final bloc = context.read<AdminLocalAndInternationalRelationsListBloc>();
                   showDialog(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:color_ado/data/vos/admin/admin_vo.dart';
 import 'package:color_ado/data/vos/banner_vo/banner_vo.dart';
 import 'package:color_ado/data/vos/centers_vo/centers_vo.dart';
 import 'package:color_ado/data/vos/cu_events_vo/cu_events_vo.dart';
@@ -28,11 +29,13 @@ abstract class ColorAdoDataAgent {
 
   Stream<List<CUEventsVO>> getCUEvents();
 
-  Future createUser(UserVO user);
+  Future createAdmin(AdminVO user, String password);
 
   Future logout();
 
-  Future<List<UserVO>> getRegisterUserList();
+  Future<List<AdminVO>> getRegisterAdminList();
+
+  Future<List<UserVO>> getGuestUserList();
 
   Future<String> uploadFileToFireStore(
     File image,
@@ -41,7 +44,21 @@ abstract class ColorAdoDataAgent {
 
   Future login(String email, String password);
 
-  Future createToken(String token);
+  Future createGuestUser();
+
+  Future<int> getCUEventsNotificationCountByUserID();
+
+  Future<int> getNewsNotificationCountByUserID();
+
+  Stream<int> getCuEventsNotificationCountReactiveByUserID();
+
+  Stream<int> getNewsNotificationCountReactiveByUserID();
 
   Future<List<String>> getTokenList();
+
+  Future deleteExpireFCMTokenUser();
+
+  Future setCUEventsNotificationCount(int count, {int? uID, String? fcmToken});
+
+  Future setNewsNotificationCount(int count, {int? uID, String? fcmToken});
 }

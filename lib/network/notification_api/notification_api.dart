@@ -4,7 +4,13 @@ import 'package:color_ado/service/fcm_service.dart';
 import 'package:dio/dio.dart';
 
 class NotificationAPI {
-  static Future<void> sendFCMMessage(String title, String description, dynamic payload, List<String> tokens) async {
+  static Future<void> sendFCMMessage(
+    String title,
+    String description,
+    dynamic payload,
+    List<String> tokens,
+    Function callBackAfterNotification,
+  ) async {
     final String serverKey = await FcmService.getAccessToken();
     const String fcmEndpoint = 'https://fcm.googleapis.com/v1/projects/color-ado-334c0/messages:send';
 
@@ -32,7 +38,9 @@ class NotificationAPI {
           options: Options(headers: headers),
           data: jsonEncode(message),
         );
+        callBackAfterNotification();
       } catch (error) {
+        print("Error:$error");
         continue;
       }
     }

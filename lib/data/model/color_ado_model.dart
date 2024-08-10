@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:color_ado/data/vos/admin/admin_vo.dart';
 import 'package:color_ado/data/vos/banner_vo/banner_vo.dart';
 import 'package:color_ado/data/vos/centers_vo/centers_vo.dart';
 import 'package:color_ado/data/vos/cu_events_vo/cu_events_vo.dart';
@@ -32,12 +33,13 @@ class ColorAdoModel {
 
   Stream<List<CUEventsVO>> getCUEvents() => _adoDataAgent.getCUEvents();
 
-  Future createUser(UserVO user) => _adoDataAgent.createUser(user);
+  Future createAdmin(AdminVO user, String password) => _adoDataAgent.createAdmin(
+        user,
+        password,
+      );
 
-  Future<List<UserVO>> getRegisterUserList() => _adoDataAgent.getRegisterUserList();
-
-  Future<String> getRegisterUserNameByEmail(String email) async {
-    final userList = await _adoDataAgent.getRegisterUserList();
+  Future<String> getRegisterAdminNameByEmail(String email) async {
+    final userList = await _adoDataAgent.getRegisterAdminList();
     final userName = userList.where((element) => element.email == email).firstOrNull;
     if (userName == null) {
       return Future.error('User Name Cannot find');
@@ -68,7 +70,31 @@ class ColorAdoModel {
 
   Future login(String email, String password) => _adoDataAgent.login(email, password);
 
-  Future createToken(String token) => _adoDataAgent.createToken(token);
+  Future createGuestUser() => _adoDataAgent.createGuestUser();
 
   Future<List<String>> getTokenList() => _adoDataAgent.getTokenList();
+
+  Future deleteExpireFCMTokenUser() => _adoDataAgent.deleteExpireFCMTokenUser();
+
+  Future<int> getCUEventsNotificationCountByUserID() => _adoDataAgent.getCUEventsNotificationCountByUserID();
+
+  Future<int> getNewsNotificationCountByUserID() => _adoDataAgent.getNewsNotificationCountByUserID();
+
+  Stream<int> getCuEventsNotificationCountReactiveByUserID() => _adoDataAgent.getCuEventsNotificationCountReactiveByUserID();
+
+  Stream<int> getNewsNotificationCountReactiveByUserID() => _adoDataAgent.getNewsNotificationCountReactiveByUserID();
+
+  Future setCUEventsNotificationCount(int count, {int? uID, String? fcmToken}) => _adoDataAgent.setCUEventsNotificationCount(
+        count,
+        uID: uID,
+        fcmToken: fcmToken,
+      );
+
+  Future setNewsNotificationCount(int count, {int? uID, String? fcmToken}) => _adoDataAgent.setNewsNotificationCount(
+        count,
+        uID: uID,
+        fcmToken: fcmToken,
+      );
+
+  Future<List<UserVO>> getGuestUserList() => _adoDataAgent.getGuestUserList();
 }

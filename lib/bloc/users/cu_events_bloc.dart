@@ -22,7 +22,7 @@ class CUEventsBloc extends BaseBloc {
         _storeAllCUEvents = [];
         _cuEventsCountByDate = 0;
       } else {
-        _storeAllCUEvents = cuEvents;
+        _storeAllCUEvents = cuEvents.reversed.toList();
         final currentDateTime = DateTime.now().toString().getYearMonthDay;
         _cuEvents = _storeAllCUEvents?.where((data) => data.createdAt.getYearMonthDay == currentDateTime).toList();
         _cuEventsCountByDate = _cuEvents?.length;

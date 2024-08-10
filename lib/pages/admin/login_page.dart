@@ -1,6 +1,6 @@
 import 'package:color_ado/bloc/admin/login_bloc.dart';
 import 'package:color_ado/pages/admin/admin_home_page.dart';
-import 'package:color_ado/pages/admin/create_user_page.dart';
+import 'package:color_ado/pages/admin/create_admin_page.dart';
 import 'package:color_ado/utils/image_utils.dart';
 import 'package:color_ado/widgets/loadin_dialog_widget.dart';
 import 'package:color_ado/widgets/sample_dialog_widget.dart';
@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                       alignment: Alignment.center,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CreateUserPage()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CreateAdminPage()));
                         },
                         child: const Text(
                           'No Account? Create one.',
