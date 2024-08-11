@@ -184,22 +184,9 @@ class CreateEditBloc extends BaseBloc {
         final payload = '$kCUEventsPath|$_title|$_description';
         NotificationAPI.sendFCMMessage(
           _title ?? '',
-          'Please check new events',
+          'Please check CU Events',
           payload,
           tokens,
-          () async {
-            final guestUserList = await _colorAdoModel.getGuestUserList();
-            guestUserList.removeWhere((element) => element.fcmToken == FcmService.fcmToken);
-            for (var element in guestUserList) {
-              int previousNotificationCount = element.cuEventNotificationCount;
-              String fcmToken = element.fcmToken;
-              _colorAdoModel.setCUEventsNotificationCount(
-                ++previousNotificationCount,
-                uID: element.id,
-                fcmToken: fcmToken,
-              );
-            }
-          },
         );
       });
     }
@@ -236,22 +223,9 @@ class CreateEditBloc extends BaseBloc {
         final payload = '$kNewsPath|$_title|$_description';
         NotificationAPI.sendFCMMessage(
           _title ?? '',
-          'Please check new events',
+          'Please check News',
           payload,
           tokens,
-          () async {
-            final guestUserList = await _colorAdoModel.getGuestUserList();
-            guestUserList.removeWhere((element) => element.fcmToken == FcmService.fcmToken);
-            for (var element in guestUserList) {
-              int previousNotificationCount = element.newsNotificationCount;
-              String fcmToken = element.fcmToken;
-              _colorAdoModel.setNewsNotificationCount(
-                ++previousNotificationCount,
-                uID: element.id,
-                fcmToken: fcmToken,
-              );
-            }
-          },
         );
       });
     }

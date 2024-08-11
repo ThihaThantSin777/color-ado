@@ -38,15 +38,15 @@ class NotificationScheduler {
           String path = dataSplit.firstOrNull ?? "";
           if (path == kNewsPath) {
             int currentNotificationCount = await ColorAdoModel().getNewsNotificationCountByUserID();
-            ColorAdoModel().setNewsNotificationCount(--currentNotificationCount);
+            await ColorAdoModel().setNewsNotificationCount(--currentNotificationCount);
           }
 
           if (path == kCUEventsPath) {
             int currentNotificationCount = await ColorAdoModel().getCUEventsNotificationCountByUserID();
-            ColorAdoModel().setCUEventsNotificationCount(--currentNotificationCount);
+            await ColorAdoModel().setCUEventsNotificationCount(--currentNotificationCount);
           }
 
-          Future.wait([ColorAdoModel().getCUEventsNotificationCountByUserID(), ColorAdoModel().getNewsNotificationCountByUserID()])
+          await Future.wait([ColorAdoModel().getCUEventsNotificationCountByUserID(), ColorAdoModel().getNewsNotificationCountByUserID()])
               .then((countsList) {
             int cuEventsNotificationCountList = countsList.firstOrNull ?? 0;
             int newsEventsNotificationCountList = countsList.lastOrNull ?? 0;
@@ -90,16 +90,16 @@ class NotificationScheduler {
     String path = dataSplit.firstOrNull ?? "";
     if (path == kNewsPath) {
       int currentNotificationCount = await ColorAdoModel().getNewsNotificationCountByUserID();
-      ColorAdoModel().setNewsNotificationCount(++currentNotificationCount);
+      await ColorAdoModel().setNewsNotificationCount(++currentNotificationCount);
     }
 
     if (path == kCUEventsPath) {
       int currentNotificationCount = await ColorAdoModel().getCUEventsNotificationCountByUserID();
-
-      ColorAdoModel().setCUEventsNotificationCount(++currentNotificationCount);
+      currentNotificationCount = currentNotificationCount + 1;
+      await ColorAdoModel().setCUEventsNotificationCount(currentNotificationCount);
     }
 
-    Future.wait([ColorAdoModel().getCUEventsNotificationCountByUserID(), ColorAdoModel().getNewsNotificationCountByUserID()])
+    await Future.wait([ColorAdoModel().getCUEventsNotificationCountByUserID(), ColorAdoModel().getNewsNotificationCountByUserID()])
         .then((countsList) {
       int cuEventsNotificationCountList = countsList.firstOrNull ?? 0;
       int newsEventsNotificationCountList = countsList.lastOrNull ?? 0;
