@@ -70,6 +70,8 @@ class _FacilitiesViewAllVerticalListView extends StatelessWidget {
                     builder: (_) => HomeDetailsPage(
                           image: facilitiesList[index].url,
                           description: facilitiesList[index].description,
+                          pdfName: facilitiesList[index].pdfName,
+                          pdfUrl: facilitiesList[index].pdfURL,
                         )));
               },
               child: Card(
@@ -116,6 +118,8 @@ class _CentersViewAllVerticalListView extends StatelessWidget {
                     builder: (_) => HomeDetailsPage(
                           image: centersList[index].url,
                           description: centersList[index].description,
+                          pdfName: centersList[index].pdfName,
+                          pdfUrl: centersList[index].pdfURL,
                         )));
               },
               child: Card(
@@ -162,6 +166,8 @@ class _LocalAndInternationalRelationshipsView extends StatelessWidget {
                     builder: (_) => HomeDetailsPage(
                           image: localAndInternationalRelationsList[index].url,
                           description: localAndInternationalRelationsList[index].description,
+                          pdfName: localAndInternationalRelationsList[index].pdfName,
+                          pdfUrl: localAndInternationalRelationsList[index].pdfURL,
                         )));
               },
               child: Card(
