@@ -7,7 +7,7 @@ part of 'user_vo.dart';
 // **************************************************************************
 
 UserVO _$UserVOFromJson(Map<String, dynamic> json) => UserVO(
-      json['id'] as int,
+      (json['id'] as num).toInt(),
       json['fcmToken'] as String,
       (json['cuEventNotificationCount'] as num).toInt(),
       (json['newsNotificationCount'] as num).toInt(),

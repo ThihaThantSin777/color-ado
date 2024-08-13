@@ -7,6 +7,7 @@ import 'package:color_ado/data/vos/cu_events_vo/cu_events_vo.dart';
 import 'package:color_ado/data/vos/facilities_vo/facilities_vo.dart';
 import 'package:color_ado/data/vos/local_and_international_relations_vo/local_and_international_relations_vo.dart';
 import 'package:color_ado/data/vos/news_vo/news_vo.dart';
+import 'package:color_ado/data/vos/notification_vo/notification_vo.dart';
 import 'package:color_ado/data/vos/setting_vo/setting_vo.dart';
 import 'package:color_ado/data/vos/user_vo/user_vo.dart';
 
@@ -61,4 +62,10 @@ abstract class ColorAdoDataAgent {
   Future setCUEventsNotificationCount(int count, {int? uID, String? fcmToken});
 
   Future setNewsNotificationCount(int count, {int? uID, String? fcmToken});
+
+  Future saveNotificationData(NotificationVO notification);
+
+  Future readNotification(int userID, int notificationID);
+
+  Stream<List<NotificationVO>> getNotificationList();
 }

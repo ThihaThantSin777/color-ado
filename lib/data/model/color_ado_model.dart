@@ -7,6 +7,7 @@ import 'package:color_ado/data/vos/cu_events_vo/cu_events_vo.dart';
 import 'package:color_ado/data/vos/facilities_vo/facilities_vo.dart';
 import 'package:color_ado/data/vos/local_and_international_relations_vo/local_and_international_relations_vo.dart';
 import 'package:color_ado/data/vos/news_vo/news_vo.dart';
+import 'package:color_ado/data/vos/notification_vo/notification_vo.dart';
 import 'package:color_ado/data/vos/setting_vo/setting_vo.dart';
 import 'package:color_ado/data/vos/user_vo/user_vo.dart';
 import 'package:color_ado/network/data_agent/color_ado_data_agents.dart';
@@ -97,4 +98,10 @@ class ColorAdoModel {
       );
 
   Future<List<UserVO>> getGuestUserList() => _adoDataAgent.getGuestUserList();
+
+  Future saveNotificationData(NotificationVO notification) => _adoDataAgent.saveNotificationData(notification);
+
+  Future readNotification(int userID, int notificationID) => _adoDataAgent.readNotification(userID, notificationID);
+
+  Stream<List<NotificationVO>> getNotificationList() => _adoDataAgent.getNotificationList();
 }

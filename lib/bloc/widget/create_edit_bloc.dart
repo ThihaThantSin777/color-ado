@@ -8,6 +8,7 @@ import 'package:color_ado/data/vos/cu_events_vo/cu_events_vo.dart';
 import 'package:color_ado/data/vos/facilities_vo/facilities_vo.dart';
 import 'package:color_ado/data/vos/local_and_international_relations_vo/local_and_international_relations_vo.dart';
 import 'package:color_ado/data/vos/news_vo/news_vo.dart';
+import 'package:color_ado/data/vos/notification_vo/notification_vo.dart';
 import 'package:color_ado/data/vos/setting_vo/setting_vo.dart';
 import 'package:color_ado/network/notification_api/notification_api.dart';
 import 'package:color_ado/resources/strings.dart';
@@ -182,6 +183,12 @@ class CreateEditBloc extends BaseBloc {
         final tokens = await _colorAdoModel.getTokenList();
         tokens.removeWhere((element) => element == FcmService.fcmToken);
         final payload = '$kCUEventsPath|$_title|$_description';
+        final guestUserList = await _colorAdoModel.getGuestUserList();
+        final currentDate = DateTime.now();
+        final notificationID = currentDate.microsecondsSinceEpoch;
+        NotificationVO notificationVO = NotificationVO(notificationID, kCUEventsPath, 'Admin just create CU Event. Please check here.',
+            guestUserList.map((element) => element.id).toList(), [], currentDate.toString(), payload);
+        _colorAdoModel.saveNotificationData(notificationVO);
         NotificationAPI.sendFCMMessage(
           _title ?? '',
           'Please check CU Events',
@@ -220,7 +227,13 @@ class CreateEditBloc extends BaseBloc {
       return _colorAdoModel.addEditData(newsVO.id, kNewsPath, newsVO.toJson()).then((_) async {
         final tokens = await _colorAdoModel.getTokenList();
         tokens.removeWhere((element) => element == FcmService.fcmToken);
-        final payload = '$kNewsPath|$_title|$_description';
+        final payload = '$kNewsPath|$_title|$_description|$_userSelectImage';
+        final guestUserList = await _colorAdoModel.getGuestUserList();
+        final currentDate = DateTime.now();
+        final notificationID = currentDate.microsecondsSinceEpoch;
+        NotificationVO notificationVO = NotificationVO(notificationID, kNewsPath, 'Admin just create News. Please check here.',
+            guestUserList.map((element) => element.id).toList(), [], currentDate.toString(), payload);
+        _colorAdoModel.saveNotificationData(notificationVO);
         NotificationAPI.sendFCMMessage(
           _title ?? '',
           'Please check News',

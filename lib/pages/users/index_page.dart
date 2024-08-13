@@ -2,6 +2,7 @@ import 'package:color_ado/bloc/users/index_bloc.dart';
 import 'package:color_ado/pages/users/cu_events_page.dart';
 import 'package:color_ado/pages/users/home_page.dart';
 import 'package:color_ado/pages/users/news_page.dart';
+import 'package:color_ado/pages/users/notification_page.dart';
 import 'package:color_ado/pages/users/setting_page.dart';
 import 'package:color_ado/resources/strings.dart';
 import 'package:color_ado/utils/enums.dart';
@@ -17,6 +18,33 @@ class IndexPage extends StatelessWidget {
     return ChangeNotifierProvider<IndexBloc>(
       create: (_) => IndexBloc(),
       child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            Selector<IndexBloc, int?>(
+                selector: (_, bloc) => bloc.getTotalNotificationCount,
+                builder: (context, notificationCount, __) {
+                  return Badge(
+                    alignment: const Alignment(0.15, -1),
+                    isLabelVisible: notificationCount != null && notificationCount != 0,
+                    label: Text(notificationCount.toString()),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: GestureDetector(
+                        onTap: () {
+                          final bloc = context.read<IndexBloc>();
+                          bloc.setNewsNotificationRead();
+                          bloc.setCUEventsNotificationRead();
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const NotificationPage()));
+                        },
+                        child: const Icon(
+                          Icons.notifications,
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+          ],
+        ),
         bottomNavigationBar: const _IndexBottomNavigationBarView(),
         body: Selector<IndexBloc, LoadingState>(
             selector: (_, bloc) => bloc.getLoadingState,

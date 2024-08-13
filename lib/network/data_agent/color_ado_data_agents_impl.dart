@@ -7,6 +7,7 @@ import 'package:color_ado/data/vos/cu_events_vo/cu_events_vo.dart';
 import 'package:color_ado/data/vos/facilities_vo/facilities_vo.dart';
 import 'package:color_ado/data/vos/local_and_international_relations_vo/local_and_international_relations_vo.dart';
 import 'package:color_ado/data/vos/news_vo/news_vo.dart';
+import 'package:color_ado/data/vos/notification_vo/notification_vo.dart';
 import 'package:color_ado/data/vos/setting_vo/setting_vo.dart';
 import 'package:color_ado/data/vos/user_vo/user_vo.dart';
 import 'package:color_ado/database/share_preferences_dao.dart';
@@ -264,21 +265,18 @@ class ColorAdoDataAgentImpl extends ColorAdoDataAgent {
 
   @override
   Stream<int> getCuEventsNotificationCountReactiveByUserID(int id) {
-    final userRef = databaseRef.child(kUserPath).child(id.toString());
     return databaseRef.child(kUserPath).child(id.toString()).onValue.map((event) {
       final rawData = event.snapshot.value as Map<Object?, Object?>;
       final convertedMap = rawData.map((key, value) {
         return MapEntry(key.toString(), value);
       });
       final user = UserVO.fromJson(Map<String, dynamic>.from(convertedMap));
-      print("CU: ${user.cuEventNotificationCount}");
       return user.cuEventNotificationCount;
     });
   }
 
   @override
   Stream<int> getNewsNotificationCountReactiveByUserID(int id) {
-    final userRef = databaseRef.child(kUserPath).child(id.toString());
     return databaseRef.child(kUserPath).child(id.toString()).onValue.map((event) {
       final rawData = event.snapshot.value as Map<Object?, Object?>;
       final convertedMap = rawData.map((key, value) {
@@ -302,5 +300,36 @@ class ColorAdoDataAgentImpl extends ColorAdoDataAgent {
       });
       return UserVO.fromJson(convertedMap);
     }).toList();
+  }
+
+  @override
+  Future saveNotificationData(NotificationVO notification) {
+    return databaseRef.child(kNotificationPath).child(notification.notificationID.toString()).set(notification.toJson());
+  }
+
+  @override
+  Future readNotification(int userID, int notificationID) async {
+    final rawData = await databaseRef.child(kNotificationPath).child(notificationID.toString()).get();
+    final rawMap = rawData.value as Map<Object?, Object?>;
+
+    Map<String, dynamic> convertedMap = rawMap.map((key, value) {
+      return MapEntry(key.toString(), value);
+    });
+
+    NotificationVO? notificationByID = NotificationVO.fromJson(convertedMap);
+
+    List<int> readNotificationList = notificationByID.readNotificationUserList ?? [];
+    readNotificationList.add(userID);
+    notificationByID.readNotificationUserList = readNotificationList;
+    return databaseRef.child(kNotificationPath).child(notificationByID.notificationID.toString()).set(notificationByID.toJson());
+  }
+
+  @override
+  Stream<List<NotificationVO>> getNotificationList() {
+    return databaseRef.child(kNotificationPath).onValue.map((event) {
+      return event.snapshot.children.map<NotificationVO>((snapshot) {
+        return NotificationVO.fromJson(Map<String, dynamic>.from(snapshot.value as Map));
+      }).toList();
+    });
   }
 }

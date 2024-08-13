@@ -23,3 +23,4 @@ const kCUEventsPath = 'cu_events';
 const kAdminPath = 'admin';
 const kPDFPath = 'pdf';
 const kUserPath = 'user';
+const kNotificationPath = 'notification';

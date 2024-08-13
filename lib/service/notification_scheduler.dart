@@ -1,6 +1,7 @@
 import 'package:color_ado/data/model/color_ado_model.dart';
 import 'package:color_ado/main.dart';
 import 'package:color_ado/pages/users/cu_events_details_page.dart';
+import 'package:color_ado/pages/users/news_details_page.dart';
 import 'package:color_ado/resources/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_icon_badge/flutter_app_icon_badge.dart';
@@ -39,11 +40,28 @@ class NotificationScheduler {
           if (path == kNewsPath) {
             int currentNotificationCount = await ColorAdoModel().getNewsNotificationCountByUserID();
             await ColorAdoModel().setNewsNotificationCount(--currentNotificationCount);
+            MyApp.navigatorKey.currentState?.push(
+              MaterialPageRoute(
+                builder: (_) => NewsDetailsPage(
+                  image: dataSplit.lastOrNull ?? '',
+                  title: dataSplit[1],
+                  description: dataSplit[2],
+                ),
+              ),
+            );
           }
 
           if (path == kCUEventsPath) {
             int currentNotificationCount = await ColorAdoModel().getCUEventsNotificationCountByUserID();
             await ColorAdoModel().setCUEventsNotificationCount(--currentNotificationCount);
+            MyApp.navigatorKey.currentState?.push(
+              MaterialPageRoute(
+                builder: (_) => CUEventsDetailsPage(
+                  title: dataSplit[1],
+                  description: dataSplit.lastOrNull ?? '',
+                ),
+              ),
+            );
           }
 
           await Future.wait([ColorAdoModel().getCUEventsNotificationCountByUserID(), ColorAdoModel().getNewsNotificationCountByUserID()])
@@ -52,15 +70,6 @@ class NotificationScheduler {
             int newsEventsNotificationCountList = countsList.lastOrNull ?? 0;
             FlutterAppIconBadge.updateBadge(cuEventsNotificationCountList + newsEventsNotificationCountList);
           });
-
-          MyApp.navigatorKey.currentState?.push(
-            MaterialPageRoute(
-              builder: (_) => CUEventsDetailsPage(
-                title: dataSplit[1],
-                description: dataSplit.lastOrNull ?? '',
-              ),
-            ),
-          );
         }
       },
     );

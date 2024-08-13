@@ -16,6 +16,9 @@ class IndexBloc extends BaseBloc {
 
   UserBottomNavigationBarIndex get getActiveIndex => _activeIndex;
 
+  int? _totalNotificationCount;
+
+  int? get getTotalNotificationCount => _totalNotificationCount;
   final ColorAdoModel _colorAdoModel = ColorAdoModel();
 
   IndexBloc() {
@@ -30,11 +33,13 @@ class IndexBloc extends BaseBloc {
       SharePreferencesDAO.getUserID().then((id) {
         _colorAdoModel.getCuEventsNotificationCountReactiveByUserID(id ?? 0).listen((data) {
           _cuEventsNotificationCount = data;
+          _totalNotificationCount = _cuEventsNotificationCount + _newsNotificationCount;
           notifyListeners();
         });
 
         _colorAdoModel.getNewsNotificationCountReactiveByUserID(id ?? 0).listen((data) {
           _newsNotificationCount = data;
+          _totalNotificationCount = _newsNotificationCount + _cuEventsNotificationCount;
           notifyListeners();
         });
       });
