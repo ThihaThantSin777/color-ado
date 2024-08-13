@@ -68,6 +68,7 @@ class _FacilitiesViewAllVerticalListView extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => HomeDetailsPage(
+                          title: facilitiesList[index].title,
                           image: facilitiesList[index].url,
                           description: facilitiesList[index].description,
                           pdfName: facilitiesList[index].pdfName,
@@ -116,6 +117,7 @@ class _CentersViewAllVerticalListView extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => HomeDetailsPage(
+                          title: centersList[index].title,
                           image: centersList[index].url,
                           description: centersList[index].description,
                           pdfName: centersList[index].pdfName,
@@ -164,6 +166,7 @@ class _LocalAndInternationalRelationshipsView extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => HomeDetailsPage(
+                          title: localAndInternationalRelationsList[index].title,
                           image: localAndInternationalRelationsList[index].url,
                           description: localAndInternationalRelationsList[index].description,
                           pdfName: localAndInternationalRelationsList[index].pdfName,

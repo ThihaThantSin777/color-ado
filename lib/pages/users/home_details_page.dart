@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 class HomeDetailsPage extends StatelessWidget {
   const HomeDetailsPage({
     super.key,
+    required this.title,
     required this.image,
     required this.description,
     this.pdfName,
     this.pdfUrl,
   });
 
+  final String title;
   final String image;
   final String description;
   final String? pdfName;
@@ -30,6 +32,19 @@ class HomeDetailsPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Center(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: kFontSize22x,
+                      height: 2,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: kSP10x,
+                ),
                 Hero(
                   tag: image,
                   child: CachedNetworkImage(

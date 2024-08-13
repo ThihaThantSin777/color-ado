@@ -17,13 +17,14 @@ class CardImageHorizontalListWidget extends StatelessWidget {
   final String title;
   final String? viewAllTitle;
   final Function onTapViewAll;
-  final List<(String image, String description, String? pdfName, String? pdfUrl)> imageAndDescList;
+  final List<(String image, String description, String? pdfName, String? pdfUrl, String title)> imageAndDescList;
   final double cardListViewHeight;
   final Function(
     String image,
     String description,
     String? pdfName,
     String? pdfUrl,
+    String title,
   ) onTapImageCard;
 
   @override
@@ -77,7 +78,7 @@ class CardImageHorizontalListWidget extends StatelessWidget {
             children: imageAndDescList
                 .map((e) => GestureDetector(
                       onTap: () {
-                        onTapImageCard(e.$1, e.$2, e.$3, e.$4);
+                        onTapImageCard(e.$1, e.$2, e.$3, e.$4, e.$5);
                       },
                       child: _ImageCardView(
                         image: e.$1,

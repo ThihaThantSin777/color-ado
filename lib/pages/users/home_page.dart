@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
                     }
 
                     return CardImageHorizontalListWidget(
-                      onTapImageCard: (image, description, pdfName, pdfUrl) {
+                      onTapImageCard: (image, description, pdfName, pdfUrl, title) {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) => HomeDetailsPage(
@@ -76,6 +76,7 @@ class HomePage extends StatelessWidget {
                               description: description,
                               pdfName: pdfName,
                               pdfUrl: pdfUrl,
+                              title: title,
                             ),
                           ),
                         );
@@ -88,6 +89,7 @@ class HomePage extends StatelessWidget {
                               e.description,
                               e.pdfName,
                               e.pdfURL,
+                              e.title,
                             ),
                           )
                           .toList(),
@@ -122,13 +124,14 @@ class HomePage extends StatelessWidget {
                     }
 
                     return CardImageHorizontalListWidget(
-                      onTapImageCard: (image, description, pdfName, pdfUrl) {
+                      onTapImageCard: (image, description, pdfName, pdfUrl, title) {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => HomeDetailsPage(
                                   image: image,
                                   description: description,
                                   pdfName: pdfName,
                                   pdfUrl: pdfUrl,
+                                  title: title,
                                 )));
                       },
                       title: kCentersText,
@@ -139,6 +142,7 @@ class HomePage extends StatelessWidget {
                               e.description,
                               e.pdfName,
                               e.pdfURL,
+                              e.title,
                             ),
                           )
                           .toList(),
@@ -172,13 +176,14 @@ class HomePage extends StatelessWidget {
                     }
 
                     return CardImageHorizontalListWidget(
-                      onTapImageCard: (image, description, pdfName, pdfUrl) {
+                      onTapImageCard: (image, description, pdfName, pdfUrl, title) {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => HomeDetailsPage(
                                   image: image,
                                   description: description,
                                   pdfName: pdfName,
                                   pdfUrl: pdfUrl,
+                                  title: title,
                                 )));
                       },
                       title: kLocalAndInternationalRelationShipsText,
@@ -190,6 +195,7 @@ class HomePage extends StatelessWidget {
                               e.description,
                               e.pdfName,
                               e.pdfURL,
+                              e.title,
                             ),
                           )
                           .toList(),
