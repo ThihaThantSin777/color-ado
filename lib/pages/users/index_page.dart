@@ -34,6 +34,7 @@ class IndexPage extends StatelessWidget {
                           final bloc = context.read<IndexBloc>();
                           bloc.setNewsNotificationRead();
                           bloc.setCUEventsNotificationRead();
+                          bloc.setTotalNotificationRead();
                           Navigator.of(context).push(MaterialPageRoute(builder: (_) => const NotificationPage()));
                         },
                         child: const Icon(

@@ -58,4 +58,9 @@ class IndexBloc extends BaseBloc {
   void setNewsNotificationRead() {
     _colorAdoModel.setNewsNotificationCount(0);
   }
+
+  void setTotalNotificationRead() {
+    _totalNotificationCount = 0;
+    notifyListeners();
+  }
 }
