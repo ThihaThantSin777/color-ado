@@ -117,7 +117,7 @@ class CreateEditBloc extends BaseBloc {
     }
 
     if (_path == kNewsPath) {
-      _btnDisable = (_title ?? '').isEmpty || (_description ?? '').isEmpty || (_userSelectImage ?? '').isEmpty;
+      _btnDisable = (_title ?? '').isEmpty || (_description ?? '').isEmpty;
       notifyListeners();
     }
 
@@ -186,7 +186,7 @@ class CreateEditBloc extends BaseBloc {
         final guestUserList = await _colorAdoModel.getGuestUserList();
         final currentDate = DateTime.now();
         final notificationID = currentDate.microsecondsSinceEpoch;
-        NotificationVO notificationVO = NotificationVO(notificationID, kCUEventsPath, 'Admin just create CU Event. Please check here.',
+        NotificationVO notificationVO = NotificationVO(notificationID, kCUEventsPath, _title ?? '',
             guestUserList.map((element) => element.id).toList(), [], currentDate.toString(), payload);
         _colorAdoModel.saveNotificationData(notificationVO);
         NotificationAPI.sendFCMMessage(
@@ -223,7 +223,7 @@ class CreateEditBloc extends BaseBloc {
     }
 
     if (_path == kNewsPath) {
-      NewsVO newsVO = NewsVO(id, _title ?? '', _description ?? '', DateTime.now().toString(), _userSelectImage ?? '');
+      NewsVO newsVO = NewsVO(id, _title ?? '', _description ?? '', DateTime.now().toString(), _userSelectImage);
       return _colorAdoModel.addEditData(newsVO.id, kNewsPath, newsVO.toJson()).then((_) async {
         final tokens = await _colorAdoModel.getTokenList();
         tokens.removeWhere((element) => element == FcmService.fcmToken);
@@ -231,7 +231,7 @@ class CreateEditBloc extends BaseBloc {
         final guestUserList = await _colorAdoModel.getGuestUserList();
         final currentDate = DateTime.now();
         final notificationID = currentDate.microsecondsSinceEpoch;
-        NotificationVO notificationVO = NotificationVO(notificationID, kNewsPath, 'Admin just create News. Please check here.',
+        NotificationVO notificationVO = NotificationVO(notificationID, kNewsPath, _title ?? '',
             guestUserList.map((element) => element.id).toList(), [], currentDate.toString(), payload);
         _colorAdoModel.saveNotificationData(notificationVO);
         NotificationAPI.sendFCMMessage(

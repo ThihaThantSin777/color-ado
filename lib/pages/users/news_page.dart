@@ -42,7 +42,7 @@ class NewsPage extends StatelessWidget {
                             builder: (_) => NewsDetailsPage(
                               description: newData.description,
                               title: newData.title,
-                              image: newData.image,
+                              image: newData.image ?? '',
                             ),
                           ),
                         );

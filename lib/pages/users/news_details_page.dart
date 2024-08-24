@@ -12,7 +12,7 @@ class NewsDetailsPage extends StatelessWidget {
 
   final String title;
   final String description;
-  final String image;
+  final String? image;
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +26,13 @@ class NewsDetailsPage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CachedNetworkImage(
-                  imageUrl: image,
-                  fit: BoxFit.cover,
-                  height: kDetailsPageImageHeight,
-                ),
+                if (image != null && (image?.isNotEmpty ?? false)) ...[
+                  CachedNetworkImage(
+                    imageUrl: image ?? '',
+                    fit: BoxFit.cover,
+                    height: kDetailsPageImageHeight,
+                  ),
+                ],
                 const SizedBox(
                   height: kSP10x,
                 ),

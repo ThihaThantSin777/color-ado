@@ -9,7 +9,7 @@ class NewsVO {
   String description;
   @JsonKey(name: 'create_at')
   String createdAt;
-  String image;
+  String? image;
 
   NewsVO(
     this.id,

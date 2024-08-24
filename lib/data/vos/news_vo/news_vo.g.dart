@@ -11,7 +11,7 @@ NewsVO _$NewsVOFromJson(Map<String, dynamic> json) => NewsVO(
       json['title'] as String,
       json['description'] as String,
       json['create_at'] as String,
-      json['image'] as String,
+      json['image'] as String?,
     );
 
 Map<String, dynamic> _$NewsVOToJson(NewsVO instance) => <String, dynamic>{
